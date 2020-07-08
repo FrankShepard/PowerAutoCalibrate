@@ -35,6 +35,9 @@ namespace ACPowerControl
 
 		}
 
+		bool switch_value = false; //标记switch button控件的值
+		bool power_value = false; //标记power button控件的值
+
 		const string Calibration_Error = "校准过程中出现了故障";
 		const string AbrotCalibration = "用户终止校准";
 		const Int32 CR_VALUE = 50000;   //使用CR模式放电的带载电阻值
@@ -64,12 +67,6 @@ namespace ACPowerControl
 		private void Main_vEnableSet( Control control , bool enable )
 		{
 			control.IsEnabled = enable;
-		}
-
-		private delegate void dlgMain_vPowerButtonStatusSet( NationalInstruments.Controls.PowerButton button , bool status );
-		private void Main_vPowerButtonStatusSet( NationalInstruments.Controls.PowerButton button , bool status )
-		{
-			button.Value = status;
 		}
 
 		private void BtnChange_Click( object sender , RoutedEventArgs e )
@@ -323,7 +320,7 @@ namespace ACPowerControl
 				trdACPowerWorking = new Thread( () => Main_vStepVoltageWorking( Convert.ToUInt16( started_voltage ) , Convert.ToUInt16( ended_voltage ) , Convert.ToUInt16( step_voltage ) , Convert.ToUInt16( step_period ) ) );
 			}
 
-			switch1.Value = false;
+			switch_value = false;
 			ctsExitVoltageStepChange = new CancellationTokenSource( );
 
 			trdACPowerWorking.Start( );
@@ -566,12 +563,12 @@ namespace ACPowerControl
 					/*需要使用的串口不可以相同*/
 					if ( ( sp_acpower == null ) || ( sp_common == null ) || ( sp_product == null ) ) {
 						MessageBox.Show( "请保证使用3个不同的串口" );
-						btnStartCalibration.Value = false;
+						power_value  = false;
 						return;
 					}
 					if ( ( sp_acpower.PortName == sp_common.PortName ) || ( sp_acpower.PortName == sp_product.PortName ) || ( sp_common.PortName == sp_product.PortName ) ) {
 						MessageBox.Show( "请保证使用3个不同的串口" );
-						btnStartCalibration.Value = false;
+						power_value = false;
 						return;
 					}
 					/*需要保证使用到的串口都可以正常工作*/
@@ -584,7 +581,7 @@ namespace ACPowerControl
 						sp_acpower.Close( );
 						sp_common.Close( );
 						sp_product.Close( );
-						btnStartCalibration.Value = false;
+						power_value = false;
 						return;
 					}
 
@@ -675,7 +672,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 3500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_B1031F__IG_B03S01; product.communicate_baudrate = 4800;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false;product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -686,7 +683,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 3500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_X1032F; product.communicate_baudrate = 4800;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -697,7 +694,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 5500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_X1041F; product.communicate_baudrate = 4800;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -708,7 +705,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 7800; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_B1061F__IG_B06S01; product.communicate_baudrate = 4800;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -718,7 +715,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 7800; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_B1061H; product.communicate_baudrate = 4800;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -730,7 +727,7 @@ namespace ACPowerControl
 					product.species_name = Product.SpeciesName.IG_X1061F; product.communicate_baudrate = 4800;
 
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
 					break;
@@ -741,7 +738,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 10500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = ( Product.SpeciesName ) cobSpeciesProduct.SelectedIndex ; product.communicate_baudrate = 4800;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -752,7 +749,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 20500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_X1201F; product.communicate_baudrate = 4800;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -763,7 +760,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 31500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_X1301F; product.communicate_baudrate = 4800;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -774,7 +771,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 4000; product.desinged_ocp_2 = 1500; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_B2031F__IG_B03D01; product.communicate_baudrate = 4800;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -785,7 +782,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 4000; product.desinged_ocp_2 = 1500; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_B2031G__IG_B03D02; product.communicate_baudrate = 4800;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -796,7 +793,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 4000; product.desinged_ocp_2 = 1500; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_B2031H__IG_B03D03; product.communicate_baudrate = 4800;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -807,7 +804,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 2200; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_B2022F; product.communicate_baudrate = 115200;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -818,7 +815,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 3500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_B1032F; product.communicate_baudrate = 115200;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -829,7 +826,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 0; product.desinged_ocp_2 = 4000; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_B2032F; product.communicate_baudrate = 115200;
 					product.output_channel = 2; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -840,7 +837,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 0; product.desinged_ocp_2 = 4000; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_B2032H; product.communicate_baudrate = 115200;
 					product.output_channel = 2; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -852,7 +849,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 3150; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = ( Product.SpeciesName ) cobSpeciesProduct.SelectedIndex; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -863,7 +860,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 4500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = ( Product.SpeciesName )cobSpeciesProduct.SelectedIndex; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -874,7 +871,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 6500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_B2073F; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -885,7 +882,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 5500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_B1051H; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = false;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -896,7 +893,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 12000; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_M1101F__IG_M10S01; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -907,7 +904,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 10500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = ( Product.SpeciesName ) cobSpeciesProduct.SelectedIndex ; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -918,7 +915,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 21000; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_M1202F; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -929,7 +926,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 31500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_M1302F; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -940,7 +937,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 10500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_M1102H; product.communicate_baudrate = 4800;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -951,7 +948,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 21000; product.desinged_ocp_2 = 20500; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_M1202H; product.communicate_baudrate = 4800;
 					product.output_channel = 2; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -973,7 +970,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 6000; product.desinged_ocp_2 = 7200; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.J_EI8212; product.communicate_baudrate = 9600;
 					product.output_channel = 2; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -984,7 +981,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 5500; product.desinged_ocp_2 = 8500; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_M2131H; product.communicate_baudrate = 19200;
 					product.output_channel = 2; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -995,7 +992,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 5500; product.desinged_ocp_2 = 8500; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_M2132F; product.communicate_baudrate = 9600;
 					product.output_channel = 2; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -1006,7 +1003,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 2500; product.desinged_ocp_2 = 10000; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.GST_LD_D02H; product.communicate_baudrate = 4800;
 					product.output_channel = 2; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -1017,7 +1014,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 2500; product.desinged_ocp_2 = 12000; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_M2121F; product.communicate_baudrate = 4800;
 					product.output_channel = 2; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -1028,7 +1025,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 6000; product.desinged_ocp_2 = 6000; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_B2108; product.communicate_baudrate = 4800;
 					product.output_channel = 2; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -1039,7 +1036,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 4500; product.desinged_ocp_2 = 6500; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_M2102F; product.communicate_baudrate = 9600;
 					product.output_channel = 2; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -1050,7 +1047,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 10500; product.desinged_ocp_2 = 10500; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_M2202F; product.communicate_baudrate = 9600;
 					product.output_channel = 2; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = false;
@@ -1061,7 +1058,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 17000; product.desinged_ocp_2 = 2500; product.desinged_ocp_3 = 12000;
 					product.species_name = Product.SpeciesName.IG_M3201F__20A主机电源; product.communicate_baudrate = 4800;
 					product.output_channel = 3; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
@@ -1074,18 +1071,18 @@ namespace ACPowerControl
 					product.species_name = ( Product.SpeciesName ) cobSpeciesProduct.SelectedIndex;
 					if ( product.species_name == Product.SpeciesName.GST_LD_D06H ) { product.communicate_baudrate = 4800; } else if ( product.species_name == Product.SpeciesName.IG_M3242F ) { product.communicate_baudrate = 9600; }
 					product.output_channel = 3; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					break;
 				case Product.SpeciesName.IG_M3202F:
-					product.calibration_current_1 = 10000; product.calibration_current_2 = 2000; product.calibration_current_3 = 10000;
-					product.desinged_ocp_1 = 12500; product.desinged_ocp_2 = 3000; product.desinged_ocp_3 = 12500;
+					product.calibration_current_1 = 10000; product.calibration_current_2 = 10000; product.calibration_current_3 = 10000;
+					product.desinged_ocp_1 = 12500; product.desinged_ocp_2 = 12500; product.desinged_ocp_3 = 12500;
 					product.species_name = ( Product.SpeciesName )cobSpeciesProduct.SelectedIndex;
 					product.communicate_baudrate = 9600; 
 					product.output_channel = 3; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.Mark;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
@@ -1096,7 +1093,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 10500; product.desinged_ocp_2 = 10500; product.desinged_ocp_3 = 10500;
 					product.species_name = Product.SpeciesName.IG_M3302F; product.communicate_baudrate = 9600;
 					product.output_channel = 3; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = false;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
@@ -1107,7 +1104,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 8900; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_Z2071F; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = true;
+					product.mainpower_voltage_should_calirate = true; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -1118,7 +1115,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 12500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_Z2102F; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = true;
+					product.mainpower_voltage_should_calirate = true; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -1129,7 +1126,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 14900; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_Z2121F; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = true;
+					product.mainpower_voltage_should_calirate = true; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -1140,7 +1137,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 21600; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_Z2182F; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = true;
+					product.mainpower_voltage_should_calirate = true; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -1151,7 +1148,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 23000; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_Z2181F; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = true;
+					product.mainpower_voltage_should_calirate = true; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -1162,7 +1159,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 34500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_Z2272F; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = true;
+					product.mainpower_voltage_should_calirate = true; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -1173,7 +1170,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 12500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_Z2102L; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = true;
+					product.mainpower_voltage_should_calirate = true; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -1184,7 +1181,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 21600; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_Z2182L; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = true;
+					product.mainpower_voltage_should_calirate = true; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -1195,7 +1192,7 @@ namespace ACPowerControl
 					product.desinged_ocp_1 = 34500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
 					product.species_name = Product.SpeciesName.IG_Z2272L; product.communicate_baudrate = 9600;
 					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
-					product.mainpower_voltage_should_calirate = true;
+					product.mainpower_voltage_should_calirate = true; product.serial_parity = Parity.None;
 
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
@@ -1204,7 +1201,10 @@ namespace ACPowerControl
 					break;
 			}
 
-			UserSettedCurrent[ 0 ] = product.calibration_current_1; UserSettedCurrent[ 1 ] = product.calibration_current_2;
+			//使能产品使用串口的cob选择
+			cobSerialPort_Product.IsEnabled = true;
+
+			UserSettedCurrent [ 0 ] = product.calibration_current_1; UserSettedCurrent[ 1 ] = product.calibration_current_2;
 			UserSettedCurrent[ 2 ] = product.calibration_current_3; txtCurrent1.Text = UserSettedCurrent[ 0 ].ToString( );
 			txtCurrent2.Text = UserSettedCurrent[ 1 ].ToString( ); txtCurrent3.Text = UserSettedCurrent[ 2 ].ToString( );
 
@@ -1303,7 +1303,7 @@ namespace ACPowerControl
 			Dispatcher.Invoke( new dlgMain_vEnableSet( Main_vEnableSet ) , gpbGpibAddress , true );
 			Dispatcher.Invoke( new dlgMain_vEnableSet( Main_vEnableSet ) , gpbLoadCurrent , true );
 			Dispatcher.Invoke( new dlgMain_vEnableSet( Main_vEnableSet ) , gpbOutputChannel , true );
-			Dispatcher.Invoke( new dlgMain_vPowerButtonStatusSet( Main_vPowerButtonStatusSet ) , btnStartCalibration , false );
+			power_value = false ;
 			sp_acpower.Close( );
 			sp_common.Close( );
 			sp_product.Close( );
@@ -2125,15 +2125,15 @@ namespace ACPowerControl
 		{
 			string error_information = string.Empty;
 			try {
-				if ( powerButton1.Value == true ) {
+				if ( power_value == true ) {
 					using ( AN97002H acpower = new AN97002H( ) ) {
 						error_information = acpower.ACPower_vControlStart( 12 , ref sp_acpower );
-						if ( error_information != string.Empty ) { MessageBox.Show( "开始工作指令错误，请重试" ); powerButton1.Value = false; }
+						if ( error_information != string.Empty ) { MessageBox.Show( "开始工作指令错误，请重试" ); power_value = false; }
 					}
 				} else {
 					using ( AN97002H acpower = new AN97002H( ) ) {
 						error_information = acpower.ACPower_vControlStop( 12 , ref sp_acpower );
-						if ( error_information != string.Empty ) { MessageBox.Show( "停止工作指令错误，请重试" ); powerButton1.Value = true; }
+						if ( error_information != string.Empty ) { MessageBox.Show( "停止工作指令错误，请重试" ); power_value = true; }
 					}
 				}
 			} catch {
@@ -2145,9 +2145,9 @@ namespace ACPowerControl
 
 		private void Switch1_Click( object sender , RoutedEventArgs e )
 		{
-			if ( switch1.Value != false ) {
+			if ( switch_value != false ) {
 				/*紧急退出交流电压的步进操作*/
-				if ( trdACPowerWorking != null ) { if ( trdACPowerWorking.IsAlive ) { ctsExitVoltageStepChange.Cancel( ); } else { switch1.Value = false; } } else { switch1.Value = false; }
+				if ( trdACPowerWorking != null ) { if ( trdACPowerWorking.IsAlive ) { ctsExitVoltageStepChange.Cancel( ); } else { switch_value = false; } } else { switch_value = false; }
 			} else {
 				/*无效操作*/
 			}
@@ -2166,6 +2166,10 @@ namespace ACPowerControl
 			for ( int index = 0 ; index < product.Species.Length ; index++ ) {
 				cobSpeciesProduct.Items.Add( product.Species[ index ] );
 			}
+
+			//禁止产品使用串口的选择
+			cobSerialPort_Product.IsEnabled = false;
+			sp_product = null;
 		}
 
 		/// <summary>
@@ -2221,7 +2225,7 @@ namespace ACPowerControl
 			int select_index = cob.SelectedIndex;
 			if ( select_index >= 0 ) {
 				string select_com_name = cob.SelectedValue.ToString( );
-				sp_product = new SerialPort( select_com_name , 9600 , Parity.None , 8 , StopBits.One );
+				sp_product = new SerialPort( select_com_name , 9600 , product.serial_parity , 8 , StopBits.One );
 			}
 		}
 

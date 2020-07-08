@@ -287,8 +287,8 @@ namespace ACPowerControl
 					golden_finger = new byte[] { 0xA5 , 0x30 , 0x01 , 0xD6 };
 					strInformation = McuControl_vCommandSend( golden_finger , ref sp_mcu );
 					break;
-				case Product.SpeciesName.IG_M3202F:
-					golden_finger = new byte[] { 0xAA, 0x30, 0x01, 0xDB };
+				case Product.SpeciesName.IG_M3202F: //泰和安通讯版本
+					golden_finger = new byte[] { 0xE6, 0x03, 0xDF, 0x5F,0xD1 };
 					strInformation = McuControl_vCommandSend( golden_finger, ref sp_mcu );
 					break;
 				case Product.SpeciesName.IG_X1101K://泰和安 需求10A箱式

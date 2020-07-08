@@ -124,9 +124,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\仪表程控\Instrument_Control\Instrument_Control\backup\历史版本\1.0.2.1\Instrument_Control.dll</HintPath>
     </Reference>
-    <Reference Include="NationalInstruments.Common, Version=15.0.40.49154, Culture=neutral, PublicKeyToken=dc6ad606294fc298, processorArchitecture=MSIL" />
-    <Reference Include="NationalInstruments.Controls, Version=15.0.40.3898, Culture=neutral, PublicKeyToken=dc6ad606294fc298, processorArchitecture=MSIL" />
-    <Reference Include="NationalInstruments.Controls.Booleans, Version=15.0.40.3898, Culture=neutral, PublicKeyToken=dc6ad606294fc298, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -190,6 +187,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\down.png" />
     <Resource Include="Images\ExtensionManager_vsix_OSReg_256x.png" />
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +225,8 @@
     <Content Include="Images\imageres_5305.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Images\power.png" />
+    <Resource Include="Images\up.png" />
     <Resource Include="Images\Logo.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

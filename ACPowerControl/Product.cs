@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO.Ports;
 
 namespace ACPowerControl
 {
@@ -22,6 +23,10 @@ namespace ACPowerControl
 
 		public int communicate_baudrate;
 		public SpeciesName species_name;
+		/// <summary>
+		/// 产品通讯使用的串口校验类型
+		/// </summary>
+		public Parity serial_parity;
 
 		/// <summary>
 		/// 若是后续新增产品种类，则需要继续扩展

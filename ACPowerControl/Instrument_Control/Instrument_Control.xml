@@ -1,0 +1,3826 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Instrument_Control</name>
+    </assembly>
+    <members>
+        <member name="T:Instrument_Controls.AN97002H">
+            <summary>
+            与交流电源AN97002H进行通讯的方法
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.AN97002H.Working_Status">
+            <summary>
+            交流电源的工作状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Working_Status.Await_Status">
+            <summary>
+            电源输入开关打开的状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Working_Status.Setting_Status">
+            <summary>
+            尚未开始运行之前对参数进行设置的状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Working_Status.Running_Status">
+            <summary>
+            开始进行交流电源输出的状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Working_Status.SystemSetting_Status">
+            <summary>
+            对电源进行设置状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Working_Status.Error_Status">
+            <summary>
+            系统出现故障状态
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.AN97002H.Winexe">
+            <summary>
+            快捷组的枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Winexe.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Winexe.First">
+            <summary>
+            第1快捷组
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Winexe.Second">
+            <summary>
+            第2快捷组
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Winexe.Third">
+            <summary>
+            第3快捷组
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Winexe.Fourth">
+            <summary>
+            第4快捷组
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Winexe.Fifth">
+            <summary>
+            第5快捷组
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Winexe.Sixth">
+            <summary>
+            第6快捷组
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.AN97002H.Parameters">
+            <summary>
+            交流电源的电压、电流、频率、功率实时测量值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Parameters.Voltage">
+            <summary>
+            实际输出电压
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Parameters.Current">
+            <summary>
+            实际输出电流
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Parameters.Frequency">
+            <summary>
+            实际输出频率
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Parameters.Power">
+            <summary>
+            实际输出功率
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.AN97002H.Setting_Parameters">
+            <summary>
+            交流电源预置参数
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Setting_Parameters.Voltage">
+            <summary>
+            预置的输出电压
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Setting_Parameters.Frequency">
+            <summary>
+            预置的输出频率
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Setting_Parameters.Up_Floating">
+            <summary>
+            预置的上浮电压极限
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Setting_Parameters.Down_Floating">
+            <summary>
+            预置的下浮电压极限
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Setting_Parameters.Winexe_Entity">
+            <summary>
+            预置的快捷组
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Setting_Parameters.High_Lock">
+            <summary>
+            预置的高位锁定状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Serialport_Redata">
+            <summary>
+            定义一个动态数组，用于放置串口接收到的交流电源的响应值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Head">
+            <summary>
+            通讯帧头
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.End">
+            <summary>
+            通讯帧尾
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Information_AcpowerError_OpenSP">
+            <summary>
+            串口丢失导致无法通讯
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Information_AcpowerError_HasFault">
+            <summary>
+            交流电源仪器本身出现故障
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Information_AcpowerError_Initialize">
+            <summary>
+            初始化异常
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Information_AcpowerError_CommandNoMean">
+            <summary>
+            操作指令无效
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Information_AcpowerError_CannotBeExcuted">
+            <summary>
+            操作指令为非法操作，需要改变工作状态之后再设置
+            </summary>        
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Information_AcpowerError_CommandLost">
+            <summary>
+            返回数据不完整
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.AN97002H.Information_AcpowerTimeOver">
+            <summary>
+            响应超时
+            </summary>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vGetCalibrateCode(System.Collections.ArrayList)">
+            <summary>
+            计算通讯的校验和的低字节
+            </summary>
+            <param name="data_arrayList">通过串口发送的指令元素数组</param>
+            <returns>返回的校验和</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vSendCommand(System.Collections.ArrayList,System.IO.Ports.SerialPort@)">
+            <summary>
+            使用串口发送指令代码
+            </summary>
+            <param name="command_arrayList">不定长度的命令字的指令元素数组</param>
+            <param name="sp_acpower">目标串口</param>
+            <returns>发送指令的状态信息，返回值为 string.Empty 说明正常传输数据</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vInitializate(System.Byte,System.IO.Ports.SerialPort@)">
+            <summary>
+            程控交流电源初始化；注意：连续操作启动指令、查询指令之前需要执行延迟等待，否则交流电源容易不响应
+            </summary>
+            <param name="address">程控交流电源中设置的地址 0 ~ 255</param>
+            <param name="sp_acpower">程控交流电源使用到的串口的对象</param>
+            <returns>初始化信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vCOMRespond(System.IO.Ports.SerialPort@)">
+            <summary>
+            程控交流电源指令响应与读取数据的判断
+            </summary>
+            <param name="sp_acpower">程控交流电源连接的电脑串口</param>
+            <returns>程控交流电源的响应，正确与否的判定依据之一</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vControlStart(System.Byte,System.IO.Ports.SerialPort@)">
+            <summary>
+            向程控交流电源发送的启动指令
+            </summary>
+            <param name="address">交流电源地址，电源上设置的从1~254</param>
+            <param name="sp_acpower">与交流电源连接的电脑串口</param>
+            <returns>发送指令的信息，若不是string.Empty，则表示发送指令时出现了异常</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vControlStop(System.Byte,System.IO.Ports.SerialPort@)">
+            <summary>
+            向程控交流电源发送的停止指令
+            </summary>
+            <param name="address">交流电源地址，电源上设置的从1~254</param>
+            <param name="sp_acpower">与交流电源连接的电脑串口</param>
+            <returns>发送指令的信息，若不是string.Empty，则表示发送指令时出现了异常</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vSetParameters(System.Byte,System.UInt16,System.UInt16,System.Byte,System.Byte,System.Byte,System.Boolean,System.IO.Ports.SerialPort@)">
+            <summary>
+            向交流电源发送仪表常规测量参数的设置值
+            </summary>
+            <param name="address">交流电源的地址</param>
+            <param name="volatge_100mV">设定的交流电压输出值（单位为0.1V,取值范围从1~3000）</param>
+            <param name="frequency_100mHz">设定的交流频率（单位为0.1Hz，取值定点500、600、1200、4000等）</param>
+            <param name="up_floating">输出电压的上浮值（5V~30V整数）</param>
+            <param name="down_floating">输出电压的下浮值（5V~30V整数）</param>
+            <param name="winexe">快捷组，取值从1~6，整数</param>
+            <param name="high_lock">高档锁定状态</param>
+            <param name="sp_acpower">与交流电源连接的串口</param>
+            <returns>发送指令的信息，若不是string.Empty则表示发送指令时出现了异常情况</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vQueryModel(System.Byte,System.IO.Ports.SerialPort@)">
+            <summary>
+            查询交流电源的型号
+            </summary>
+            <param name="address">交流电源的地址</param>
+            <param name="sp_acpower">与交流电源连接的串口</param>
+            <returns>查询错误提示信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vQueryVerion(System.Byte,System.IO.Ports.SerialPort@)">
+            <summary>
+            查询交流电源的软件版本
+            </summary>
+            <param name="address">交流电源的地址</param>
+            <param name="sp_acpower">交流电源与上位机连接的串口</param>
+            <returns>查询错误提示信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vQueryWorkingStatus(System.Byte,System.IO.Ports.SerialPort@)">
+            <summary>
+            查询交流电源的工作状态
+            </summary>
+            <param name="address">交流电源的地址</param>
+            <param name="sp_acpower">交流电源与上位机连接的串口</param>
+            <returns>查询错误提示信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vQueryResult(System.Byte,System.IO.Ports.SerialPort@)">
+            <summary>
+            查询当前时刻电源的具体数值，包括电压、电流、频率、功率
+            </summary>
+            <param name="address">交流电源的地址</param>
+            <param name="sp_acpower">交流电源与上位机连接的串口</param>
+            <returns>查询错误信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vQuerySettingParameters(System.Byte,System.IO.Ports.SerialPort@)">
+            <summary>
+            对交流电源预置参数的查询，包含电压、频率、上浮值、下浮值、快捷组、高档锁定状态
+            </summary>
+            <param name="address">交流电源地址</param>
+            <param name="sp_acpower">交流电源与上位机连接的串口</param>
+            <returns>查询错误信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vGetModel">
+            <summary>
+            获取交流电源的型号
+            </summary>
+            <returns>交流电源型号或者异常信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vGetVerion">
+            <summary>
+            获取交流电源的软件版本号
+            </summary>
+            <returns>软件版本或者异常信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vGetWorkingStatus">
+            <summary>
+            获取当前程控电源的工作状态
+            </summary>
+            <returns>返回程控电源工作状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vGetParameters">
+            <summary>
+            获取当前测试的电压、电流、频率、功率参数
+            </summary>
+            <returns>电压、电流、频率、功率参数的结构体</returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.ACPower_vGetSettingParameters">
+            <summary>
+            获取交流电源预置参数
+            </summary>
+            <returns>返回的包含电压、频率、上浮值、下浮值、快捷组、高档定位的预置参数 </returns>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.Dispose">
+            <summary>
+            释放内存中所占的资源
+            </summary>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.Dispose(System.Boolean)">
+            <summary>
+            无法直接调用的资源释放程序
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:Instrument_Controls.AN97002H.Finalize">
+            <summary>
+            类析构函数
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500">
+            <summary>
+            定义用于和电子负载IT8500+系列的通讯类
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_No_Parmeter">
+            <summary>
+            上位机发送的不含参数的指令的枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_No_Parmeter.Defalut_No_Sense">
+            <summary>
+            默认，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_No_Parmeter.Trig_BUS">
+            <summary>
+            发送一个BUS型触发信号
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_No_Parmeter.Calibration_Data">
+            <summary>
+            校准数据保存到EEPROM区
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_No_Parmeter.Calibration_Data_Initalizate">
+            <summary>
+            恢复校准数据至初始化值  
+            </summary>                                                         
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_No_Parmeter.Protect_Status_Clear">
+            <summary>
+            清除保护状态
+            </summary>                                             	
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_No_Parmeter.Trig_Send">
+            <summary>
+            发送给负载一个触发信号（不好用，不建议使用）
+            </summary>                                                        
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter">
+            <summary>
+            上位机发送的只含有一个单字节参数的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Defalut_No_Sense">
+            <summary>
+            默认 无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.VON_Mode">
+            <summary>
+            Von模式的设置    
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Remote_Or_Local">
+            <summary>
+            远程或者本地的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.On_Or_Off">
+            <summary>
+            电子负载输入开关的动作设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Operation_Mode">
+            <summary>
+            电子负载操作模式设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.List_Operation_Mode">
+            <summary>
+            负载List模式设置（适用于CC模式）
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.List_Cyclical_Mode">
+            <summary>
+            负载List的循环模式设置 
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.List_Saved_Split_Mode">
+            <summary>
+            负载List存储区的划分模式设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.List_Save">
+            <summary>
+            负载List文件保存 
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.ForLoadOn_Timer_Status">
+            <summary>
+            定时器For Load On的开关状态设置 
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.New_Address">
+            <summary>
+            负载新的通讯地址设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Local_Key_Enable">
+            <summary>
+            是否允许Loacl键的使用设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Remote_Sense_Status">
+            <summary>
+            远端测量模式开关状态设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Trig_Status">
+            <summary>
+            负载触发模式的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Parameter_Setting">
+            <summary>
+            负载参数存储区域设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Working_Mode">
+            <summary>
+            负载工作模式的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Voltage_Calibrate">
+            <summary>
+            校准负载电压
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Current_Calibrate">
+            <summary>
+            校准电流
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.OverCurrent_Protect_DelayTime">
+            <summary>
+            过流保护延时时间的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.OverCurrent_Protect_Enable">
+            <summary>
+            过流保护开关状态的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.OverPower_Protect_DelayTime_Software">
+            <summary>
+            软件过功率保护延迟时间的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.AutoRange_Status">
+            <summary>
+            电压测量自动量程开关状态的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Function_CR_LED_CR">
+            <summary>
+            CR模式下CR_LED功能启用状态设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Key_Press">
+            <summary>
+            修改机器内部的寄存器，模拟键盘按下 
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.VFD_Show_Status">
+            <summary>
+            VFD显示模式的设置（正常模式为可随输入电压变化，文本模式则不可）  
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.AutoTest_Stop_Condiction">
+            <summary>
+            自动测试停止条件模式设置（测试完成停止或者测试失败停止）
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.AutoTest_Login">
+            <summary>
+            自动测试链接文件的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.AutoTest_File_Save">
+            <summary>
+            自动测试文件的保存
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Short_Parmeter">
+            <summary>
+            上位机发送的只含有一个16位整数参数的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Short_Parmeter.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Short_Parmeter.List_Count">
+            <summary>
+            负载List的步数设置(默认低字节在前，若是控制异常，则需修改至单独的枚举中)
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Short_Parmeter.ForLoadOn_Timer_Time">
+            <summary>
+            负载本次工作时间设置（定时器For Load On中保存 1s单位）
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Short_Parmeter.AutoTest_Single">
+            <summary>
+            自动测试使用的单步序号的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Short_Parmeter.AutoTest_Single_Short">
+            <summary>
+            自动测试时使用的短路的单步序号设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Short_Parmeter.AutoTest_Single_Suspend">
+            <summary>
+            自动测试时暂停的单步序号设置  
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter">
+            <summary>
+            上位机发送的只含有一个32位整数参数的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.OverPower_ProtectValue_Hardware">
+            <summary>
+            硬件过功率保护值设置 
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.VON_Voltage">
+            <summary>
+            电子负载开始带载的Von电压设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Input_Voltage_Max">
+            <summary>
+            电子负载最大输入电压值设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Input_Current_Max">
+            <summary>
+            电子负载最大输入电流值设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Input_Power_Max">
+            <summary>
+            电子负载最大输入功率值设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Current_CC">
+            <summary>
+            电子负载CC模式的电流值设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Voltage_CV">
+            <summary>
+            电子负载CV模式的电压值设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Power_CW">
+            <summary>
+            电子负载CW模式的功率值设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Restance_CR">
+            <summary>
+            电子负载CR模式的电阻值设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.OverCurrent_ProtectValue">
+            <summary>
+            过流保护值的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.OverPower_ProtectValue_Software">
+            <summary>
+            软件过功率保护值的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.CompareValue_FirstPiont_MC">
+            <summary>
+            测控时间第1点 比较电压的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.CompareValue_SencondPiont_MC">
+            <summary>
+            测控时间第2点比较电压的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.StopedValtage_CR_LED_Mode">
+            <summary>
+            CR_LED模式下截止电压值的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Current_Rised_Slopes">
+            <summary>
+            电流上升斜率的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Current_Decline_Slopes">
+            <summary>
+            电流下降斜率的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Voltage_MAX_CC">
+            <summary>
+            CC模式时电压上限的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Voltage_MIN_CC">
+            <summary>
+            CC模式时电压下限的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Current_MAX_CV">
+            <summary>
+            CV模式时电流上限的设置    
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Current_MIN_CV">
+            <summary>
+            CV模式时电流下限的设置  
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Voltage_MAX_CW">
+            <summary>
+            CW模式时电压上限的设置 
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Voltage_MIN_CW">
+            <summary>
+            CW模式时电压下限的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Restance_MAX_Settng">
+            <summary>
+            最大输入电阻值的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Voltage_MAX_CR">
+            <summary>
+            CR模式时电压上限的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Voltage_MIN_CR">
+            <summary>
+            CR模式时电压下限的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Current_Range_List">
+            <summary>
+            List模式时电流量程的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.AutoTest_Start_Voltage">
+            <summary>
+            自动测试文件开始电压的设置
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Calibration_Protect_Status">
+            <summary>
+            上位机发送的校准保护状态设置的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Calibration_Protect_Status.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Calibration_Protect_Status.Calibration_Protecting_Status">
+            <summary>
+            负载校准保护状态设置
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Single_Parmeters">
+            <summary>
+            上位机发送的List模式单步参数的指令的枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Single_Parmeters.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Single_Parmeters.List_Single_Current_Time">
+            <summary>
+            负载List中的单步电流及时间设置
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Dynamic_Parmeters">
+            <summary>
+            上位机发送的动态参数的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Dynamic_Parmeters.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Dynamic_Parmeters.Current_Dynamic">
+            <summary>
+            负载动态电流参数设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Dynamic_Parmeters.Voltage_Dynamic">
+            <summary>
+            负载动态电压参数设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Dynamic_Parmeters.Power_Dynamic">
+            <summary>
+            负载动态功率参数设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Dynamic_Parmeters.Restance_Dynamic">
+            <summary>
+            负载动态电阻参数设置
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Name_Parmeter">
+            <summary>
+            上位机发送的List的文件名的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Name_Parmeter.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Name_Parmeter.List_Name">
+            <summary>
+            负载List的文件名设置
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Calibration_Information">
+            <summary>
+            上位机发送的设置负载校准信息的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Calibration_Information.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Calibration_Information.Calibration_Information">
+            <summary>
+            校准信息的设置（ASIC码）
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Single_Time">
+            <summary>
+            上位机发送的设置负载List模式的指定单步的带载、卸载与测试时间的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Single_Time.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Single_Time.AutoTest_Single_LoadingTime">
+            <summary>
+            自动测试时指定单步带载时间的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Single_Time.AutoTest_Single_TestingTime">
+            <summary>
+            自动测试时指定单步测试时间的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Single_Time.AutoTest_Single_UnLoadingTime">
+            <summary>
+            自动测试时指定单步的卸载时间的设置
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_VFD_Show">
+            <summary>
+            上位机发送的设置VFD显示内容的指令的枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_VFD_Show.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_VFD_Show.VFD_Show">
+            <summary>
+            VFD显示内容变更（不建议使用此功能）
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter">
+            <summary>
+            电子负载返回只包含单个byte型数据的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.Operation_Mode">
+            <summary>
+            电子负载操作模式读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.List_Operation_Mode">
+            <summary>
+            负载List模式读取（适用于CC模式）
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.List_Cyclical_Mode">
+            <summary>
+            负载List的循环模式读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.List_Saved_Split_Mode">
+            <summary>
+            负载List存储区的划分模式读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.List_Open">
+            <summary>
+            负载List文件取出
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.ForLoadOn_Timer_Status">
+            <summary>
+            定时器For Load On的开关状态读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.Remote_Sense_Status">
+            <summary>
+            远端测量模式开关状态读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.Trig_Status">
+            <summary>
+            负载触发模式的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.Parameter_Setting">
+            <summary>
+            负载参数存储区域读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.Working_Mode">
+            <summary>
+            负载工作模式的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.Calibration_Protecting_Status">
+            <summary>
+            负载校准保护状态读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.OverCurrent_Protect_DelayTime">
+            <summary>
+            过流保护延时时间的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.OverCurrent_Protect_Enable">
+            <summary>
+            过流保护开关状态的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.OverPower_Protect_DelayTime_Software">
+            <summary>
+            软件过功率保护延迟时间的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.AutoRange_Status">
+            <summary>
+            电压测量自动量程开关状态的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.Function_CR_LED_CR">
+            <summary>
+            CR模式下CR_LED功能启用状态读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.Last_Pressed_Key">
+            <summary>
+            读取最后一次键盘值（可以被98H指令更改）
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.VFD_Show_Status">
+            <summary>
+            VFD显示模式的读取（正常模式为可随输入电压变化，文本模式则不可）  
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.AutoTest_Stop_Condiction">
+            <summary>
+            自动测试停止条件模式读取（测试完成停止或者测试失败停止）
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.AutoTest_Login">
+            <summary>
+            自动测试链接文件的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter.AutoTest_File_Open">
+            <summary>
+            自动测试文件的调用
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Short_Parmeter">
+            <summary>
+            电子负载返回只含有一个16位整数参数的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Short_Parmeter.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Short_Parmeter.List_Count">
+            <summary>
+            负载List的步数读取(默认低字节在前，若是控制异常，则需修改至单独的枚举中)
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Short_Parmeter.ForLoadOn_Timer_Time">
+            <summary>
+            负载本次工作时间读取（定时器For Load On中保存 1s单位） 
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Short_Parmeter.AutoTest_Single">
+            <summary>
+            自动测试使用的单步序号的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Short_Parmeter.AutoTest_Single_Short">
+            <summary>
+            自动测试时使用的短路的单步序号读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Short_Parmeter.AutoTest_Single_Suspend">
+            <summary>
+            自动测试时暂停的单步讯号读取
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter">
+            <summary>
+            电子负载返回的只含有一个32位整数参数的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.OverPower_ProtectValue_Hardware">
+            <summary>
+            硬件过功率保护值读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.VON_Mode">
+            <summary>
+            Von模式的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.VON_Voltage">
+            <summary>
+            电子负载开始带载的Von电压读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Input_Voltage_Max">
+            <summary>
+            电子负载最大输入电压值读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Input_Current_Max">
+            <summary>
+            电子负载最大输入电流值读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Input_Power_Max">
+            <summary>
+            电子负载最大输入功率值读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Current_CC">
+            <summary>
+            电子负载CC模式的电流值读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Voltage_CV">
+            <summary>
+            电子负载CV模式的电压值读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Power_CW">
+            <summary>
+            电子负载CW模式的功率值读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Restance_CR">
+            <summary>
+            电子负载CR模式的电阻值读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Actual_Voltage">
+            <summary>
+            负载RemoteSense端接入的实际电压
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Actual_Current">
+            <summary>
+            负载的实际电流读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.OverCurrent_ProtectValue">
+            <summary>
+            过流保护值得读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.OverPower_ProtectValue_Software">
+            <summary>
+            软件过功率保护值得软件读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.CompareValue_FirstPiont_MC">
+            <summary>
+            测控时间第1点比较电压的读取 
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.CompareValue_SencondPiont_MC">
+            <summary>
+            测控时间第2点比较电压的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.StopedValtage_CR_LED_Mode">
+            <summary>
+            CR_LED模式下截止电压值的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Voltage_MAX">
+            <summary>
+            负载最大电压值的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Voltage_MIN">
+            <summary>
+            负载最小电压值的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Current_MAX">
+            <summary>
+            负载最大电流值的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Current_MIN">
+            <summary>
+            负载最小电流值的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Loaded_Capacity">
+            <summary>
+            负载带载容量值得读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Current_Rised_Slopes">
+            <summary>
+            电流上升斜率的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Current_Decline_Slopes">
+            <summary>
+            电流下降斜率的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Voltage_MAX_CC">
+            <summary>
+            CC模式时电压上限的读取 
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Voltage_MIN_CC">
+            <summary>
+            CC模式时电压下限的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Current_MAX_CV">
+            <summary>
+            CV 模式时电流上限的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Current_MIN_CV">
+            <summary>
+            CV模式时电流下限的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Voltage_MAX_CW">
+            <summary>
+            CW模式时电压上限的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Voltage_MIN_CW">
+            <summary>
+            CW模式时电压下限的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Restance_MAX_Settng">
+            <summary>
+            最大输入电阻值的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Voltage_MAX_CR">
+            <summary>
+            CR模式时电压上限的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Voltage_MIN_CR">
+            <summary>
+            CR模式时电压下限的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.Current_Range_List">
+            <summary>
+            List模式时电流量程的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter.AutoTest_Start_Voltage">
+            <summary>
+            动测试文件开始电压的读取
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Single_Parmeters">
+            <summary>
+            电子负载返回的List模式指定单步参数的指令的枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Single_Parmeters.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Single_Parmeters.List_Single_Current_Time">
+            <summary>
+            负载List中的单步电流及时间读取
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Dynamic_Parmeters">
+            <summary>
+            电子负载返回的动态参数的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Dynamic_Parmeters.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Dynamic_Parmeters.Current_Dynamic">
+            <summary>
+            负载动态电流参数读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Dynamic_Parmeters.Voltage_Dynamic">
+            <summary>
+            负载动态电压参数读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Dynamic_Parmeters.Power_Dynamic">
+            <summary>
+            负载动态功率参数读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Dynamic_Parmeters.Restance_Dynamic">
+            <summary>
+            负载动态电阻参数读取
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Name_Parmeter">
+            <summary>
+            电子负载返回的List的文件名的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Name_Parmeter.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Name_Parmeter.List_Name">
+            <summary>
+            负载List的文件名读取
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Calibration_Information">
+            <summary>
+            电子负载返回的设置负载校准信息的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Calibration_Information.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Calibration_Information.Calibration_Information">
+            <summary>
+            校准信息的读取（ASIC码） 
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Single_Time">
+            <summary>
+            电子负载返回的设置负载List模式的指定单步的带载、卸载与测试时间的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Single_Time.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Single_Time.AutoTest_Single_LoadingTime">
+            <summary>
+            自动测试时指定单步带载时间的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Single_Time.AutoTest_Single_TestingTime">
+            <summary>
+            自动测试时指定单步测试时间的读取
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Single_Time.AutoTest_Single_UnLoadingTime">
+            <summary>
+            自动测试时指定单步的卸载时间的读取
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_General">
+            <summary>
+            电子负载返回的输入电压、输入电流、输入功率及相关状态的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_General.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_General.General">
+            <summary>
+            负载当前输入电压、电流、功率、操作状态寄存器、查询状态寄存器、温度、工作模式、List步数、List循环次数等信息读取
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Machine_Information">
+            <summary>
+            电子负载返回机器产品序号、型号及软件版本号的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Machine_Information.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Machine_Information.Machine_Information">
+            <summary>
+            本台电子负载的产品序号等信息的读取
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Bar_Code">
+            <summary>
+            电子负载返回电源条形码信息的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Bar_Code.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Bar_Code.Bar_Code_Information">
+            <summary>
+            电子负载的条形码信息读取（ASIC码）
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Limit">
+            <summary>
+            电子负载返回的硬件的极限值的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Limit.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Limit.Load_Information_Performance">
+            <summary>
+            依据电子负载型号得到的性能信息
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Capacity_Timer">
+            <summary>
+            电子负载返回带载容量、带载时间、定时器剩余时间的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Capacity_Timer.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Capacity_Timer.Load_Information_2">
+            <summary>
+            负载带载容量、带载时间、定时器剩余时间信息读取
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Limit_Voltage_And_Current">
+            <summary>
+            电子负载返回输入电压、输入电流的极限值的指令枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Limit_Voltage_And_Current.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Limit_Voltage_And_Current.Load_Information_3">
+            <summary>
+            负载最大、最小输入电压、输入电流的值的读取
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Control_Mode">
+            <summary>
+            本地控制模式与远程控制模式的枚举，用于参数为 单个字节 的设置命令中
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Control_Mode.Local">
+            <summary>
+            本地操作模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Control_Mode.Remote">
+            <summary>
+            远程操作模式
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Input_Status">
+            <summary>
+            用于控制电子负载的开启或者关闭状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Input_Status.Off">
+            <summary>
+            电子负载输入开关为关闭状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Input_Status.On">
+            <summary>
+            电子负载输入开关为开启状态
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Mode">
+            <summary>
+            负载操作模式，用于参数为 单个字节 的设置命令中
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Mode.CC">
+            <summary>
+            恒流模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Mode.CV">
+            <summary>
+            恒压模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Mode.CW">
+            <summary>
+            恒功率模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Mode.CR">
+            <summary>
+            恒阻模式
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.List_Operation_Mode">
+            <summary>
+            负载的List操作模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.List_Operation_Mode.CC">
+            <summary>
+            List模式下使用恒流模式
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.List_Cyclical_Mode">
+            <summary>
+            List循环模式的枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.List_Cyclical_Mode.Once">
+            <summary>
+            当前List只操作1次
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.List_Cyclical_Mode.Repeat">
+            <summary>
+            当前List按照设定的Repeat次数进行循环操作
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.List_division_Mode">
+            <summary>
+            List存储区的划分模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.List_division_Mode.One">
+            <summary>
+            存储区不划分
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.List_division_Mode.Two">
+            <summary>
+            存储器划分为两个部分
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.List_division_Mode.Four">
+            <summary>
+            存储器划分为4个部分
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.List_division_Mode.Eight">
+            <summary>
+            存储器划分为8个部分
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Save_Location">
+            <summary>
+            存储区域的枚举，取值只能在1~7之间
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Save_Location.Defalut_No_Sense">
+            <summary>
+            默认状态，无意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Save_Location.One">
+            <summary>
+            保存位置1号
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Save_Location.Two">
+            <summary>
+            保存位置2号
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Save_Location.Three">
+            <summary>
+            保存位置3号
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Save_Location.Four">
+            <summary>
+            保存位置4号
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Save_Location.Five">
+            <summary>
+            保存位置5号
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Save_Location.Six">
+            <summary>
+            保存位置6号
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Save_Location.Seven">
+            <summary>
+            保存位置7号
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.ForLoadOn_Timer_Status">
+            <summary>
+            负载For Load On 定时器状态枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.ForLoadOn_Timer_Status.Off">
+            <summary>
+            For Load On定时器关闭状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.ForLoadOn_Timer_Status.On">
+            <summary>
+            For Load On 定时器开启状态
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Local_Enable">
+            <summary>
+            Local 按键是否允许使用
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Local_Enable.Disable">
+            <summary>
+            禁止Local按键使用
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Local_Enable.Enable">
+            <summary>
+            允许Local按键使用
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Remote_Sense_Status">
+            <summary>
+            远端测量模式的状态枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Remote_Sense_Status.Off">
+            <summary>
+            远端测量状态关闭
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Remote_Sense_Status.On">
+            <summary>
+            远端测量状态打开
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Trig_Mode">
+            <summary>
+            触发模式，用于参数为 单个字节 的设置命令中
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Trig_Mode.MANUal">
+            <summary>
+            手动触发
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Trig_Mode.EXTemal">
+            <summary>
+            外部触发
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Trig_Mode.BUS">
+            <summary>
+            总线触发
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Trig_Mode.HOLD">
+            <summary>
+            触发保持
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Working_Mode">
+            <summary>
+            负载工作模式，用于参数为 单个字节 的设置命令中
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Working_Mode.Fixed">
+            <summary>
+            正常模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Working_Mode.Short">
+            <summary>
+            输入短路模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Working_Mode.Transition">
+            <summary>
+            过渡模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Working_Mode.List">
+            <summary>
+            List模式
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Calibration_Protecting_Status">
+            <summary>
+            负载校准保护状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Calibration_Protecting_Status.Protecting_Disable">
+            <summary>
+            保护失能
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Calibration_Protecting_Status.Protecting_Enable">
+            <summary>
+            保护使能
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Calibration_Point">
+            <summary>
+            校准点 1~4
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Calibration_Point.First">
+            <summary>
+            第一较准点
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Calibration_Point.Second">
+            <summary>
+            第二校准点
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Calibration_Point.Third">
+            <summary>
+            第三较准点
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Calibration_Point.Fourth">
+            <summary>
+            第四较准点
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.VFD_Show_Mode">
+            <summary>
+            VFD的现实模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.VFD_Show_Mode.Normal">
+            <summary>
+            正常模式、实时显示接入的电压
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.VFD_Show_Mode.Text">
+            <summary>
+            文本模式，不随接入电压的变化而实时变化
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.AutoTest_Stop_Condiation">
+            <summary>
+            自动测试停止条件
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.AutoTest_Stop_Condiation.Complete">
+            <summary>
+            测试完成停止
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.AutoTest_Stop_Condiation.Failed">
+            <summary>
+            测试失败停止
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Dynamic_Mode">
+            <summary>
+            动态操作模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Dynamic_Mode.Continues">
+            <summary>
+            连续模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Dynamic_Mode.Pulse">
+            <summary>
+            脉冲模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Dynamic_Mode.Toggled">
+            <summary>
+            触发模式
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.VON_Latch_Mode">
+            <summary>
+            Von模式的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.VON_Latch_Mode.Living">
+            <summary>
+            Living模式，低于Von目标值则停止带载
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.VON_Latch_Mode.Latch">
+            <summary>
+            Latch模式，带载启动后低于Von目标值继续带载
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Set_Or_Read">
+            <summary>
+            判断是设置指令还是读取指令，用于判断电子负载返回的值的判断
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Set_Or_Read.Set">
+            <summary>
+            电子负载设置命令
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Set_Or_Read.Read">
+            <summary>
+            读取电子负载命令
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Single_Parmeters">
+            <summary>
+            用于得到电子负载在List模式下指定单步中的电流值、计时器时间及最大斜率
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Single_Parmeters.Target_Step">
+            <summary>
+            List模式下的目标单步序号
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Single_Parmeters.Current_Value">
+            <summary>
+            单步电流值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Single_Parmeters.Time">
+            <summary>
+            计时器时间
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Single_Parmeters.Max_Slope">
+            <summary>
+            最大斜率
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Dynamic_Parmeters">
+            <summary>
+            用于得到电子负载在动态测量状态中的动态参数
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Dynamic_Parmeters.Target_A_Value">
+            <summary>
+            动态测试状态A值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Dynamic_Parmeters.Target_A_Time">
+            <summary>
+            动态测试状态A时间
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Dynamic_Parmeters.Target_B_Value">
+            <summary>
+            动态测试状态B值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Dynamic_Parmeters.Target_B_Time">
+            <summary>
+            动态测试状态B时间
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Dynamic_Parmeters.Mode">
+            <summary>
+            动态测试模式 动态电流、动态电压、动态电阻
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.General_Data">
+            <summary>
+            用于得到负载的输入电压、输入电流、功率、操作状态寄存器、查询状态寄存器、散热器温度、工作模式及List模式下当前List步数、循环次数
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.General_Data.Actruly_Voltage">
+            <summary>
+            实际输入电压 - 单位1V
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.General_Data.Actruly_Current">
+            <summary>
+            实际需输入电流-单位1A
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.General_Data.Actruly_Power">
+            <summary>
+            实际输入功率-单位1W
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.General_Data.Operation">
+            <summary>
+            操作状态寄存器的状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.General_Data.Query">
+            <summary>
+            查询状态寄存器的状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.General_Data.Temprature">
+            <summary>
+            散热器温度 - 单位 摄氏度
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.General_Data.Mode">
+            <summary>
+            工作模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.General_Data.List_Step_Num">
+            <summary>
+            当前List的步数
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.General_Data.List_Cyclical_Times">
+            <summary>
+            当前List的循环次数
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register">
+            <summary>
+            查询状态寄存器中定义的结构体
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register.RV">
+            <summary>
+            输入极性反接
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register.OV">
+            <summary>
+            过电压
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register.OC">
+            <summary>
+            过电流
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register.OP">
+            <summary>
+            过功率
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register.OT">
+            <summary>
+            过温度
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register.SV">
+            <summary>
+            远端测量端子没接
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register.CC">
+            <summary>
+            恒流
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register.CV">
+            <summary>
+            恒压
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register.CW">
+            <summary>
+            恒功率
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register.CR">
+            <summary>
+            恒阻
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register.PASS">
+            <summary>
+            自动测试成功
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register.FAULT">
+            <summary>
+            自动测试失败
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Query_Register.COMPLET">
+            <summary>
+            自动测试完成
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Register">
+            <summary>
+            操作状态寄存器中定义的结构体
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Register.CAL">
+            <summary>
+            负载在校准模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Register.WTG">
+            <summary>
+            负载在等待触发信号
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Register.REMote">
+            <summary>
+            负载远端控制模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Register.OUT">
+            <summary>
+            负载输出状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Register.LOCAL">
+            <summary>
+            负载LOCAL按键状态（0 禁止，1 允许）  
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Register.SENSE">
+            <summary>
+            负载远端测量模式状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Register.LOT">
+            <summary>
+            FOR LOAD ON定时器状态
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Machine_Information">
+            <summary>
+            电子负载的产品型号、软件版本号及序列号信息
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Machine_Information.Model">
+            <summary>
+            机器的型号
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Machine_Information.Verion">
+            <summary>
+            机器的软件版本号
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Machine_Information.Serial_Code">
+            <summary>
+            机器的序列号
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Limit_Information">
+            <summary>
+            获得负载的设计参数信息
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Limit_Information.Designed_Current_Max">
+            <summary>
+            硬件设计的最大输入电流
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Limit_Information.Designed_Voltage_Max">
+            <summary>
+            硬件设计的最大输入电压
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Limit_Information.Designed_Voltage_Min">
+            <summary>
+            硬件设计的最小输入电压
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Limit_Information.Designed_Power_Max">
+            <summary>
+            硬件设计的最大输入功率
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Limit_Information.Designed_Restance_Max">
+            <summary>
+            硬件设计的最大接入电阻
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Limit_Information.Designed_Restance_Min">
+            <summary>
+            硬件设计的最小接入电阻
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Capacity_Timer">
+            <summary>
+            获得带载容量、带载上升/下降时间、定时器剩余时间信息
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Capacity_Timer.Capacity">
+            <summary>
+            带载容量
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Capacity_Timer.Working_Time">
+            <summary>
+            带载上升/下降时间
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Capacity_Timer.Timer_Left_Time">
+            <summary>
+            定时器剩余时间
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_IT8500.Limit_Voltage_And_Current">
+            <summary>
+            获得负载最大最小输入电压、电流值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Limit_Voltage_And_Current.Input_Voltage_Max">
+            <summary>
+            限制的最大输入电压
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Limit_Voltage_And_Current.Input_Voltage_Min">
+            <summary>
+            限制的最小输入电压
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Limit_Voltage_And_Current.Input_Current_Max">
+            <summary>
+            限制的最大输入电流
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Limit_Voltage_And_Current.Input_Current_Min">
+            <summary>
+            限制的最小输入电流
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.command_times">
+            <summary>
+            连续执行一次发送指令的次数，用于防止本次模式操作而引起的不响应状态
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Serialport_Redata">
+            <summary>
+            定义一个26个元素的字节数组,用于放置接收 到的电子负载响应值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Information_LoadError_Count">
+            <summary>
+            电子负载返回值不为规定的26个字节的情况
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Information_LoadError_OpenSP">
+            <summary>
+            电子负载无法打开通讯串口时返回信息
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Information_LoadError_PreimterOverflow">
+            <summary>
+            参数设置溢出时的错误状态字
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Information_LoadError_CommandCannotBeExcuted">
+            <summary>
+            为电子负载设置的命令不能被执行
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Information_LoadError_CommandNoMean">
+            <summary>
+            为电子负载设置的命令没有意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Information_LoadError_CommandUnkown">
+            <summary>
+            为电子负载设置的命令未知
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Information_LoadError_Unkown">
+            <summary>
+            电子负载通讯时发生的未知异常
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Information_LoadError_ReceivedByteDonotMatch">
+            <summary>
+            电子负载接受到的响应字节出现了不匹配的情况，在接受串口模块出现问题的时候出现的可能性比较大，例如：接触问题、硬件电路受损
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Information_LoadTimeOver">
+            <summary>
+            给电子负载发送指令，但是出现超时的情况
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_IT8500.Information_LoadError_Initialize">
+            <summary>
+            电子负载初始化异常
+            </summary>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vInitializate(System.IO.Ports.SerialPort@,System.Byte)">
+            <summary>
+            IT8500+系列电子负载的通讯初始化设置
+            </summary>
+            <param name="sp_load">电子负载通讯使用到的串口</param>
+            <param name="gpib_address">电子负载通讯使用到的地址（设置在点在负载仪表上）</param>       
+            <returns>可能存在的异常信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vComRespond(Instrument_Controls.ElectronicLoad_Control_IT8500.Set_Or_Read,System.IO.Ports.SerialPort@)">
+            <summary>
+            电子负载的指令响应与读取数据获取的判断
+            </summary>
+            <param name="Status">之前对电子负载的指令是设置还是读取</param>
+            <param name="sp_load">电子负载连接的电脑串口</param>
+            <returns>电子负子响应，正确与否的判定依据</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vSendCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_No_Parmeter,System.IO.Ports.SerialPort@)">
+            <summary>
+            发送无目标参数的指令到电子负载
+            </summary>
+            <param name="address">电子负载的地址 0~31</param>
+            <param name="command">无需目标参数的命令字</param>
+            <param name="sp_load">串口连接的地址</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vSendCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter,System.Byte,System.IO.Ports.SerialPort@)">
+            <summary>
+            发送只含一个单字节型的目标参数的设置命令
+            </summary>
+            <param name="address">仪表通讯地址0~31</param>
+            <param name="command">只有一个 byte 类型设置值数据的命令字</param>
+            <param name="value">设置的参数目标值,有可能是枚举</param>
+            <param name="sp_load">串口连接的地址</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vSendCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Short_Parmeter,System.Int16,System.IO.Ports.SerialPort@)">
+            <summary>
+            发送含有一个 short 型目标参数的设置命令
+            </summary>
+            <param name="address">仪表通讯地址0~31</param>
+            <param name="command">只有一个 short 型设置值数据的命令字</param>
+            <param name="value">设置的参数目标值</param>
+            <param name="sp_load">串口连接的地址</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vSendCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter,System.Int32,System.IO.Ports.SerialPort@)">
+            <summary>
+            发送一个 int32 类型目标参数的设置命令
+            </summary>
+            <param name="address">仪表通讯地址0~31</param>
+            <param name="command">只有一个 int32 类型设置值数据的命令字</param>
+            <param name="value">设置的参数目标值</param>
+            <param name="sp_load">串口连接的地址</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vSendCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Calibration_Protect_Status,Instrument_Controls.ElectronicLoad_Control_IT8500.Calibration_Protecting_Status,System.Int16,System.IO.Ports.SerialPort@)">
+            <summary>
+            设置负载校准保护状态
+            </summary>
+            <param name="address">仪表通讯地址0~31</param>
+            <param name="command">命令字 0x60</param>
+            <param name="status">Disable为保护失能，Enable为保护使能；若负载为校准保护失能状态才允许进行校准操作</param>
+            <param name="password">校准密码</param>
+            <param name="sp_load">串口连接的地址</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vSendCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Single_Parmeters,System.Int16,System.Int32,System.Int32,System.Int16,System.IO.Ports.SerialPort@)">
+            <summary>
+            设置负载List模式下相应单步的电流值及时间值
+            </summary>
+            <param name="address">仪表通讯地址0~31</param>
+            <param name="command">命令字 0x40</param>
+            <param name="target_step">指定的单步</param>
+            <param name="current_value_100uA">指定单步的电流值</param>
+            <param name="time_100us">指定单步的时间值</param>
+            <param name="max_slope">指定单步的上升/下降斜率，超过允许值时使用最大斜率值</param>
+            <param name="sp_load">串口连接的地址</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vSendCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Dynamic_Parmeters,System.Int32,System.Int16,System.Int32,System.Int16,Instrument_Controls.ElectronicLoad_Control_IT8500.Dynamic_Mode,System.IO.Ports.SerialPort@)">
+            <summary>
+            设置动态测试时的参数（含动态电流、电压、功率、电阻的测试）
+            </summary>
+            <param name="address">仪表通讯地址0~31</param>
+            <param name="command">动态电流/电压/功率/电阻 设置的命令字</param>
+            <param name="a_value">状态 A 的设定值</param>
+            <param name="a_time_100us">状态 A 的时间值</param>
+            <param name="b_value">状态 B 的设定值</param>
+            <param name="b_time_100us">状态 B 的时间值</param>
+            <param name="mode">动态操作模式 Continues/Pulse/Toggled</param>
+            <param name="sp_load">串口连接的地址</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vSendCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Name_Parmeter,System.String,System.IO.Ports.SerialPort@)">
+            <summary>
+            设置负载的List的文件名
+            </summary>
+            <param name="address">仪表通讯地址0~31</param>
+            <param name="command">命令字 0x48</param>
+            <param name="name">List的文件名（ASCII码的数组，10个元素）</param>
+            <param name="sp_load">串口连接的地址</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vSendCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_Calibration_Information,System.String,System.IO.Ports.SerialPort@)">
+            <summary>
+            设置负载校准信息
+            </summary>
+            <param name="address">仪表通讯地址0~31</param>
+            <param name="command">命令字 0x67</param>
+            <param name="information">校准信息（ASCII码的数组，20个元素）</param>
+            <param name="sp_load">串口连接的地址</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vSendCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_List_Single_Time,System.Byte,System.Int32,System.IO.Ports.SerialPort@)">
+            <summary>
+            设置List 模式下 指定单步的带载/卸载/测试 的时间
+            </summary>
+            <param name="address">仪表通讯地址0~31</param>
+            <param name="command">设置指定单步的带载/卸载/测试 时间的命令字</param>
+            <param name="target_step">指定的单步</param>
+            <param name="target_time">目标时间</param>
+            <param name="sp_load">串口连接的地址</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vSendCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Set_VFD_Show,System.String,System.IO.Ports.SerialPort@)">
+            <summary>
+            VFD显示内容的设置
+            </summary>
+            <param name="address">仪表通讯地址0~31</param>
+            <param name="command">命令字 0x9C</param>
+            <param name="text">在VFD设置为文本模式时需要显示的值 21个ASCII码的数组</param>
+            <param name="sp_load">串口连接的地址</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,System.Byte,System.IO.Ports.SerialPort@)">
+            <summary>
+            本文件中查询命令使用的大部分的公共函数部分
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字的字节形式</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Byte_Parmeter,System.IO.Ports.SerialPort@)">
+            <summary>
+            发送只返回单个字节值的读取指令
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Short_Parmeter,System.IO.Ports.SerialPort@)">
+            <summary>
+            发送只返回单个 short 型数据的读取指令
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_One_Int32_Parmeter,System.IO.Ports.SerialPort@)">
+            <summary>
+            发送只返回单个 Int32 型数据的读取指令
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Single_Parmeters,System.Int16,System.IO.Ports.SerialPort@)">
+            <summary>
+            发送返回List模式的 指定单步的电流值及时间值的读取指令
+            </summary>
+            <param name="address">电子负子地址</param>
+            <param name="command">命令字 0x41</param>
+            <param name="target_step">指定单步</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Dynamic_Parmeters,System.IO.Ports.SerialPort@)">
+            <summary>
+            发送返回动态参数的读取指令
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字，读取： 动态电流/电压/功率/电阻测试的参数命令</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Name_Parmeter,System.IO.Ports.SerialPort@)">
+            <summary>
+            读取List文件名的数据
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字 0x49</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Calibration_Information,System.IO.Ports.SerialPort@)">
+            <summary>
+            读取负载校准信息
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字 0x68</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_List_Single_Time,System.Byte,System.IO.Ports.SerialPort@)">
+            <summary>
+            读取List模式指定单步的带载时间/卸载时间/测试时间数据
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字 带载/卸载/测试</param>
+            <param name="target_step">指定单步</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_General,System.IO.Ports.SerialPort@)">
+            <summary>
+            读取负载当前实际测试状态 （包含实际输入电压、电流、功率、操作寄存器状态、查询寄存器状态、散热器温度、工作模式、当前LIST步数及LIST循环次数信息）
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字 0x5F</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Machine_Information,System.IO.Ports.SerialPort@)">
+            <summary>
+            读取负载机器序列号、产品型号及软件版本号
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字 0x6A</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Bar_Code,System.IO.Ports.SerialPort@)">
+            <summary>
+            读取负载条形码数据（ASCII码）
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字 0x6B</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Limit,System.IO.Ports.SerialPort@)">
+            <summary>
+            读取负载硬件极限值数据
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字 0x01</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Capacity_Timer,System.IO.Ports.SerialPort@)">
+            <summary>
+            读取负载容量、带载时间、定时器剩余时间数据
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字 0xA0</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vReceivCommand(System.Byte,Instrument_Controls.ElectronicLoad_Control_IT8500.Command_Read_Limit_Voltage_And_Current,System.IO.Ports.SerialPort@)">
+            <summary>
+            读取负载输入电压、输入电流的最大与最小值数据
+            </summary>
+            <param name="address">电子负载地址</param>
+            <param name="command">命令字 0xA1</param>
+            <param name="sp_load">串口对象</param>
+            <returns>返回值为string.Empty,表示通讯正常；若出现通讯的异常情况，将在此处进行返回</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetByteFromLoad">
+            <summary>
+            接收查询的单字节数据
+            </summary>
+            <returns>电子负载返回的目标值(此处返回的通常是枚举值，需要根据上一条指令对接收到的数据进行转换)</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetShortFromLoad">
+            <summary>
+            接收查询的short型数据
+            </summary>
+            <returns>电子负载返回的目标值</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetInt32FromLoad">
+            <summary>
+            接收查询的Int32型数据
+            </summary>
+            <returns>电子负载返回的目标值</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetListSingleParmeters">
+            <summary>
+            接收查询的电子负载List模式相应单步的参数
+            </summary>
+            <returns>相应单步的电流、时间、最大斜率</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetDynamicParmeters">
+            <summary>
+            接收查询的动态测试参数
+            </summary>
+            <returns>状态A的设定值与时间、状态B的设置值与时间</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetListNameParmeter">
+            <summary>
+            接收查询的List文件名
+            </summary>
+            <returns>List文件名</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetCalibrationInformation">
+            <summary>
+            接收查询的校准信息
+            </summary>
+            <returns>校准信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetListSingleTime">
+            <summary>
+            接收的负载的带载/测试/卸载 的时间
+            </summary>
+            <returns>时间</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetGeneralData">
+            <summary>
+            接收查询的当前状态点输入电压、输入电流、输入功率、及相关状态信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetMachineInformation">
+            <summary>
+            接收到上位机查询的电子负载的序列号、产品型号及软件版本号
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetBarCode">
+            <summary>
+            接收到上位机查询的电子负载的条形码信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetHardwareLimit">
+            <summary>
+            接收到上位机查询的电子负载的硬件的极限值信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetCapacityTimer">
+            <summary>
+            接收到上位机查询的电子负载的带载容量、带载时间/上升/下降时间、定时器剩余时间信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.ElectronicLoadControl_vGetLimitVoltageAndCurrent">
+            <summary>
+            接收到上位机查询的电子负载的最大与最小输入电压、电流值信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.Dispose">
+            <summary>
+            本类资源释放
+            </summary>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.Dispose(System.Boolean)">
+            <summary>
+            无法直接调用的资源释放程序
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_IT8500.Finalize">
+            <summary>
+            类释放资源析构函数
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_KP184">
+            <summary>
+            定义用于和电子负载KP184之间的通讯类
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_KP184.CommandReadonlyRegisterAddress">
+            <summary>
+            只读功能的寄存器地址
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandReadonlyRegisterAddress.Verion">
+            <summary>
+            仪器型号、软硬件版本、出厂日期 - 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandReadonlyRegisterAddress.AlarmTempOver">
+            <summary>
+            过热标志位 - 1byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandReadonlyRegisterAddress.VoltageMeasureHighRange">
+            <summary>
+            电压测量值，单位mV，量程150V - 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandReadonlyRegisterAddress.VoltageMeasureLowRange">
+            <summary>
+            电压测量值，单位mV，量程40V - 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandReadonlyRegisterAddress.CurrentMeasure">
+            <summary>
+            电流测试值，单位mA - 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandReadonlyRegisterAddress.BAT_Capacity">
+            <summary>
+            电池放电容量测试结果，单位为AH或WH - 4byte
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress">
+            <summary>
+            可读写功能的寄存器地址
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.KeySound">
+            <summary>
+            按键声音，1位有声，0为无声 - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.KeyEnable">
+            <summary>
+            按键使能，0为禁止失能，1为按键使能 - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.InputRecall">
+            <summary>
+            输入拉载状态保存，1为保存，0不保存 - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.VoltageSense">
+            <summary>
+            电压测量端口，1为后面远端测量，0为前面接线柱 - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.Short">
+            <summary>
+            正负输入端子短路控制，1为短路，0为不短路 - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.LoadOnOffStatus">
+            <summary>
+            加载开关  1为加载ON，0为加载OFF - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.LoadWorkingMode">
+            <summary>
+            加载模式 0-CV,1-CC,2-CR,3-CW,加载为ON时不能切换加载模式 - 有效1byte - 0,1,2,3 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.ValueSet_CV">
+            <summary>
+            电压加载值，单位mV - 4byte - 0~150000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.ValueSet_CC">
+            <summary>
+            加载加载值，单位mA - 4byte - 0~40000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.ValueSet_CR">
+            <summary>
+            电阻加载值，单位0.1欧姆 - 4byte - 0~99998
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.ValueSet_CW">
+            <summary>
+            功率加载值，单位0.01W - 4byte - 0~40000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.LoadVon">
+            <summary>
+            加载电压门槛，单位mV，输入电压大于此值可以加载（CV模式下无效） - 4byte - 0~150000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.SlewUpRate">
+            <summary>
+            电流上升斜率，单位0.1A/mS - 4byte - 0~2000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.SlewDownRate">
+            <summary>
+            电流下降斜率，单位0.1A/mS - 4byte - 0~2000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.DynaOnOffStatus">
+            <summary>
+            动态测试开关，1开，0关 - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.Level_A_Current">
+            <summary>
+            动态A带载电流值，单位mA - 4byte - 0~40000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.Width_A_Time">
+            <summary>
+            动态A带载维持时间，单位mS - 4byte - 0~65535
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.Level_B_Current">
+            <summary>
+            动态B带载电流值，单位mA - 4byte - 0~40000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.Width_B_Time">
+            <summary>
+            动态B带载维持时间，单位mS - 4byte - 0~65535
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.BAT_OnOffStatus">
+            <summary>
+            电池放电测试开关 1打开，0关闭 - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.EndTestVoltage">
+            <summary>
+            电池放电终止电压,单位mV - 4byte - 0~150000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.HalfCurrent">
+            <summary>
+            放电到达终止电压时是否电流降到一半继续放电，0否，1是 - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.CapacityUnit">
+            <summary>
+            放电容量计算单位0为AH,1为WH - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.OverSignal">
+            <summary>
+            放电结束输出信号：0响一声，1一直响，2输出电平 - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.CompareEnable">
+            <summary>
+            比较功能打开关闭   0关闭，1打开 - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.VoltageHigh">
+            <summary>
+            电压比较上限值 单位mV - 4byte - 0~150000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.VoltageLow">
+            <summary>
+            电压比较下限值 单位mV- 4byte - 0~150000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.CurrentHigh">
+            <summary>
+            电流比较上限值 单位mA - 4byte - 0~40000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.CurrentLow">
+            <summary>
+            电流比较下限值 单位mA - 4byte - 0~40000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.FailAlarm">
+            <summary>
+            比较结果为FAIL时输出的信号 - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.OCP_TestEnable">
+            <summary>
+            过流保护功能使能状态 - 有效1byte - 0,1 - 数据字节传输长度 4byte
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.OCP_StartCurrent">
+            <summary>
+            过流保护开始的电流 单位mA - 4byte - 0~40000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.OCP_StepCurrent">
+            <summary>
+            过流保护功能步进的电流值 单位mA - 4byte - 0~40000
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress.OCP_StepTime">
+            <summary>
+            过流保护功能时步进增加电流的维持时间,单位0.1s - 2byte - 3~6000
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode">
+            <summary>
+            在与KP184通讯过程中使用到的命令字符
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode.ReadRegister">
+            <summary>
+            读取寄存器中的数值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode.SetSingalRegister">
+            <summary>
+            写入单个寄存器
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode.SetMultiRegister">
+            <summary>
+            写入多个连续寄存器
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.ElectronicLoad_Control_KP184.WorkingMode">
+            <summary>
+            电子负载工作加载模式的枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.WorkingMode.WorkingMode_CV">
+            <summary>
+            恒压工作加载模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.WorkingMode.WorkingMode_CC">
+            <summary>
+            恒流工作加载模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.WorkingMode.WorkingMode_CR">
+            <summary>
+            恒阻工作加载模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.WorkingMode.WorkingMode_CW">
+            <summary>
+            恒功率工作加载模式
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.Serialport_Redata">
+            <summary>
+            定义一个最多200个元素的字节数组,用于放置接收 到的电子负载响应值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.Information_LoadError_OpenSP">
+            <summary>
+            电子负载无法打开通讯串口时返回信息
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.Information_LoadError_PreimterOverflow">
+            <summary>
+            参数设置溢出时的错误状态字
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.Information_LoadError_CommandCannotBeExcuted">
+            <summary>
+            为电子负载设置的命令不能被执行
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.Information_LoadError_CommandNoMean">
+            <summary>
+            为电子负载设置的命令没有意义
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.Information_LoadError_CommandUnkown">
+            <summary>
+            为电子负载设置的命令未知
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.Information_LoadError_Unkown">
+            <summary>
+            电子负载通讯时发生的未知异常
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.Information_LoadTimeOver">
+            <summary>
+            给电子负载发送指令，但是出现超时的情况
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.Information_LoadError_Initialize">
+            <summary>
+            电子负载初始化异常
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.ElectronicLoad_Control_KP184.Information_LoadCommunicateError">
+            <summary>
+            电子负载传输出现了错误的情况下的错误提示情况
+            </summary>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vGetCalibrateCode(System.Byte[])">
+            <summary>
+            CRC校准数据的计算获取
+            </summary>
+            <param name="data">接收到或者待发送的字节数组（不含最后两个CRC校验位）</param>
+            <returns>返回的CRC校准得到的2个字节</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vCommandSend(System.Byte[],System.IO.Ports.SerialPort@)">
+            <summary>
+            使用串口发送指令代码
+            </summary>
+            <param name="command_bytes">待发送的命令字节</param>
+            <param name="sp_load">使用到的电子负载所连接的串口</param>
+            <returns>返回的可能存在的错误信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vComRespond(System.IO.Ports.SerialPort@)">
+            <summary>
+            电子负载的指令响应与读取数据获取的判断；此处直接进行接收到的数据的CRC校验，查看回复的数据是否正常
+            </summary>
+            <param name="sp_load">电子负载连接的电脑串口</param>
+            <returns>电子负子响应，正确与否的判定依据</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vWaitForRespond(System.Byte[],System.IO.Ports.SerialPort@)">
+            <summary>
+            执行发送串口指令，并进行一段时间的等待功能，简化命令指令的代码书写
+            </summary>
+            <param name="target_code">待通过串口发送给电子负载的串口数据字节数组</param>
+            <param name="sp_load">电子负载使用的串口对象</param>
+            <returns>传输过程中可能存在的异常情况</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vInitializate(System.IO.Ports.SerialPort@,System.Int32)">
+            <summary>
+            KP184 系列电子负载的通讯初始化设置
+            </summary>
+            <param name="sp_load">电子负载通讯使用到的串口</param>
+            <param name="load_address">电子负载通讯使用到的地址（设置在点在负载仪表上）</param>
+            <returns>可能存在的异常信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vKeySound(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,System.IO.Ports.SerialPort@,System.Boolean)">
+            <summary>
+            设置或者获取按键声音的状态
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="status">是否允许按键声音</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vKeyEnable(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,System.IO.Ports.SerialPort@,System.Boolean)">
+            <summary>
+            设置或者获取按键使能状态
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="status">是否使能按键</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vInputRecall(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,System.IO.Ports.SerialPort@,System.Boolean)">
+            <summary>
+            设置或者获取电源重新上电时是否自动打开负载
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="status">是否允许开机自动带载</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vOverTempratureQuery(System.Int32,System.IO.Ports.SerialPort@)">
+            <summary>
+            查询过热保护状态
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="sp_load">使用到的串口</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vRemoteSense(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,System.IO.Ports.SerialPort@,System.Boolean)">
+            <summary>
+            设置或者获取电源远端测试状态
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="status">是否允许远端测试</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vShort(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,System.IO.Ports.SerialPort@,System.Boolean)">
+            <summary>
+            设置或者获取电子负载输入短路状态设置
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="status">是否开启短路状态</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vOnOffControl(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,System.IO.Ports.SerialPort@,System.Boolean)">
+            <summary>
+            设置或者获取电子负载输入状态
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="status">是否开启输入</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vWorkingMode(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,System.IO.Ports.SerialPort@,Instrument_Controls.ElectronicLoad_Control_KP184.WorkingMode)">
+            <summary>
+            设置或者获取电子负载是在CC、CV、CR、CW状态中的哪一种状态
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="mode">工作模式，默认按照恒流模式进行工作</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vTargetValue(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress,System.IO.Ports.SerialPort@,System.Decimal)">
+            <summary>
+            设置或者获取电子负载在CV、CC、CR、CW模式下应该保持的电压、电流、电阻、功率信息
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="register_address">选定的设置CV中指定电压、CC中指定电流、CR中指定电阻、CW中指定功率的寄存器地址</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="target_value">预设定的值 单位是 主单位</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vValueRead(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandReadonlyRegisterAddress,System.IO.Ports.SerialPort@)">
+            <summary>
+            获取电子负载电压或者电流的测试值
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="register_address">选定的设置CV中指定电压、CC中指定电流、CR中指定电阻、CW中指定功率的寄存器地址</param>
+            <param name="sp_load">使用到的串口</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vVonValue(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,System.IO.Ports.SerialPort@,System.Decimal)">
+            <summary>
+            设置或者获取电子负载的加载电压门槛，非CV模式下使用
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="target_value">加载电压门槛，超过此电压才能被加载，单位 V 注意：此种情况在CV设置的情况下无效</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vSlewRate(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress,System.IO.Ports.SerialPort@,System.Decimal)">
+            <summary>
+            设置或者获取电子负载的电流上升/下降斜率，单位为0.1A/ms
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="command_address">是设置的电流上升斜率还是电流下降斜率，用于限定控制的寄存器范围</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="target_value">加载电压门槛，超过此电压才能被加载，单位 V 注意：此种情况在CV设置的情况下无效</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vDynamic(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,System.IO.Ports.SerialPort@,System.Boolean)">
+            <summary>
+            设置或者获取电子负载的动态测试状态
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="status">是否开启动态测试功能</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vDynamic(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress,System.IO.Ports.SerialPort@,System.Decimal)">
+            <summary>
+            设置或者获取电子负载的动态响应的单个数据
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="command_address">是设置的动态A电流、A维持时间还是动态B、B维持时间，用于限定控制的寄存器范围</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="target_value">设置的动态测试时的参数</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vBatMeasure(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress,System.IO.Ports.SerialPort@,System.Boolean)">
+            <summary>
+            设置或者获取电子负载的电池测试功能
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="command_address">状态量设置的寄存器地址</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="status">是否开启电池测试功能</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vBatMeasure(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,System.IO.Ports.SerialPort@,System.Decimal)">
+            <summary>
+            设置或者获取电子负载的电池测试的单个寄存器数据 - 设置电池放电终止电压
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="target_value">设置的动态测试时的参数</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vCompareMeasure(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress,System.IO.Ports.SerialPort@,System.Decimal)">
+            <summary>
+            设置或者获取电子负载的比较功能
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="command_address">状态量设置的寄存器地址</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="target_value">需要设置的目标数据  单位为主单位</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vCompareMeasure(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,System.IO.Ports.SerialPort@,System.Boolean)">
+            <summary>
+            设置或者获取电子负载的比较功能打开功能
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="status">设置电子负载比较功能是否打开</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vOCPMeasure(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,System.IO.Ports.SerialPort@,System.Boolean)">
+            <summary>
+            设置或者获取电子负载的过流保护测试功能
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="status">设置电子负载ocp功能是否打开</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vOCPMeasure(System.Int32,Instrument_Controls.ElectronicLoad_Control_KP184.CommandCode,Instrument_Controls.ElectronicLoad_Control_KP184.CommandRegisterAddress,System.IO.Ports.SerialPort@,System.Decimal)">
+            <summary>
+            设置或者获取电子负载的OCP的参数
+            </summary>
+            <param name="load_address">电子负载的地址</param>
+            <param name="command">是设置还是读取的状态</param>
+            <param name="command_address">状态量设置的寄存器地址</param>
+            <param name="sp_load">使用到的串口</param>
+            <param name="target_value">需要设置的目标数据  单位为主单位</param>
+            <returns>可能存在的异常状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vGetBoolStatus">
+            <summary>
+            提取电子负载返回的数据，按照对应的结构体进行处理；响应查询代码时会使用到
+            </summary>
+            <returns>电子负载返回的目标值(此处返回的通常是枚举值，需要根据上一条指令对接收到的数据进行转换)</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vGetWorkingMode">
+            <summary>
+            提取电子负载工作模式的数据
+            </summary>
+            <returns>电子负载返回的目标值(此处返回的通常是枚举值，需要根据上一条指令对接收到的数据进行转换)</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.ElectronicLoadControl_vGetValue">
+            <summary>
+            获取电子负载设置的数值
+            </summary>
+            <returns>设定的电压、电流、电阻和功率信息(是否为主单位需要与其上一条指令的寄存器地址来判断  设置电流的单位为mA，设置电压的单位为mV，设置电阻的单位为Ω，设置功率的单位为0.1W)</returns>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.Dispose">
+            <summary>
+            本类资源释放
+            </summary>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.Dispose(System.Boolean)">
+            <summary>
+            无法直接调用的资源释放程序
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:Instrument_Controls.ElectronicLoad_Control_KP184.Finalize">
+            <summary>
+            类释放资源析构函数
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.SiglentOSC">
+            <summary>
+            使用VISA控制的鼎阳示波器的控制类（适用于SDS1000系列）
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.SiglentOSC.Coupling_Type">
+            <summary>
+            示波器通道测试的耦合方式枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Coupling_Type.DC">
+            <summary>
+            直流耦合
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Coupling_Type.AC">
+            <summary>
+            交流耦合
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Coupling_Type.GND">
+            <summary>
+            接地耦合
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.SiglentOSC.Impedance_Type">
+            <summary>
+            示波器的输入阻抗类型枚举
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Impedance_Type._50Ω">
+            <summary>
+            输入阻抗设置为50Ω
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Impedance_Type._1M">
+            <summary>
+            输入阻抗设置为1M
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.SiglentOSC.Voltage_DIV">
+            <summary>
+            示波器的电压的最小分辨率（纵坐标的一个的分辨率）
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Voltage_DIV._2mV">
+            <summary>
+            设置纵坐标分辨率为 2mV
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Voltage_DIV._5mV">
+            <summary>
+            设置纵坐标分辨率为 5mV
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Voltage_DIV._10mV">
+            <summary>
+            设置纵坐标分辨率为 10mV
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Voltage_DIV._20mV">
+            <summary>
+            设置纵坐标分辨率为 20mV
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Voltage_DIV._50mV">
+            <summary>
+            设置纵坐标分辨率为 50mV
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Voltage_DIV._100mV">
+            <summary>
+            设置纵坐标分辨率为 100mV
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Voltage_DIV._200mV">
+            <summary>
+            设置纵坐标分辨率为 200mV
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Voltage_DIV._500mV">
+            <summary>
+            设置纵坐标分辨率为 500mV
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Voltage_DIV._1V">
+            <summary>
+            设置纵坐标分辨率为 1V
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Voltage_DIV._2V">
+            <summary>
+            设置纵坐标分辨率为 2V
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Voltage_DIV._5V">
+            <summary>
+            设置纵坐标分辨率为 5V
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Voltage_DIV._10V">
+            <summary>
+            设置纵坐标分辨率为 10V
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.SiglentOSC.ScanerTime_DIV">
+            <summary>
+            示波器扫描时间的最小分辨率（横坐标的一个的分辨率）
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._2_5ns">
+            <summary>
+            设置横坐标分辨率为 2.5ns
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._5ns">
+            <summary>
+            设置横坐标分辨率为 5ns
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._10ns">
+            <summary>
+            设置横坐标分辨率为 10ns
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._25ns">
+            <summary>
+            设置横坐标分辨率为 25ns
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._50ns">
+            <summary>
+            设置横坐标分辨率为 50ns
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._100ns">
+            <summary>
+            设置横坐标分辨率为 100ns
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._250ns">
+            <summary>
+            设置横坐标分辨率为 250ns
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._500ns">
+            <summary>
+            设置横坐标分辨率为 500ns
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._1us">
+            <summary>
+            设置横坐标分辨率为 1us
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._2_5us">
+            <summary>
+            设置横坐标分辨率为 2.5us
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._5us">
+            <summary>
+            设置横坐标分辨率为 5us
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._10us">
+            <summary>
+            设置横坐标分辨率为 10us
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._25us">
+            <summary>
+            设置横坐标分辨率为 25us
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._50us">
+            <summary>
+            设置横坐标分辨率为 50us
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._100us">
+            <summary>
+            设置横坐标分辨率为 100us
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._250us">
+            <summary>
+            设置横坐标分辨率为 250us
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._500us">
+            <summary>
+            设置横坐标分辨率为 500us
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._1ms">
+            <summary>
+            设置横坐标分辨率为 1ms
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._2_5ms">
+            <summary>
+            设置横坐标分辨率为 2.5ms
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._5ms">
+            <summary>
+            设置横坐标分辨率为 5ms
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._10ms">
+            <summary>
+            设置横坐标分辨率为 10ms
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._25ms">
+            <summary>
+            设置横坐标分辨率为 25ms
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._50ms">
+            <summary>
+            设置横坐标分辨率为 50ms
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._100ms">
+            <summary>
+            设置横坐标分辨率为 100ms
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._250ms">
+            <summary>
+            设置横坐标分辨率为 250ms
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._500ms">
+            <summary>
+            设置横坐标分辨率为 500ms
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._1s">
+            <summary>
+            设置横坐标分辨率为 1s
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._2_5s">
+            <summary>
+            设置横坐标分辨率为 2.5s
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._5s">
+            <summary>
+            设置横坐标分辨率为 5s
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._10s">
+            <summary>
+            设置横坐标分辨率为 10s
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._25s">
+            <summary>
+            设置横坐标分辨率为 25s
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.ScanerTime_DIV._50s">
+            <summary>
+            设置横坐标分辨率为 50s
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.SiglentOSC.TrigMode_Type">
+            <summary>
+            示波器的触发模式的枚举（注意修改触发模式时暂停的状态会被默认恢复成Run的状态）
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.TrigMode_Type.auto_mode">
+            <summary>
+            自动触发模式，OSC表现为可见波形扫描变化（最常使用）
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.TrigMode_Type.normal_mode">
+            <summary>
+            正常触发模式，（不常用，不知具体的作用）
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.TrigMode_Type.single_mode">
+            <summary>
+            单次触发模式，用于检查单次波形
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.SiglentOSC.Running_Type">
+            <summary>
+            波形采集运行状态--允许或者暂停
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Running_Type.Run">
+            <summary>
+            允许波形的扫码（此时波形处于变化的情况）
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Running_Type.Stop">
+            <summary>
+            波形暂停，用于查看指定的采集到的波形
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.SiglentOSC.Parameter_Type">
+            <summary>
+            示波器波形的查询的数据类型
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.All">
+            <summary>
+            所有参数
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Amplitude">
+            <summary>
+            幅值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Base">
+            <summary>
+            波形的底端电压值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.CMEAN">
+            <summary>
+            周期平均值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.CRMS">
+            <summary>
+            周期均方根值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Duty_cycle">
+            <summary>
+            正占空比
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Falltime">
+            <summary>
+            波形下降时间
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Frequency">
+            <summary>
+            波形频率
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.FPRE">
+            <summary>
+            下降前激值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.MAXimum">
+            <summary>
+            波形最大电压值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.MINimum">
+            <summary>
+            波形最小电压值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Mean">
+            <summary>
+            平均值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Negative_duty_cycle">
+            <summary>
+            负占空比
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Negative_width">
+            <summary>
+            负脉宽
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Negative_overshoot">
+            <summary>
+            下降过激值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Positive_overshoot">
+            <summary>
+            上升过激值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Peak_to_peak">
+            <summary>
+            峰峰值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Period">
+            <summary>
+            周期
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.RPRE">
+            <summary>
+            上升前激值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Positive_width">
+            <summary>
+            正脉宽
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.RMS">
+            <summary>
+            均方根值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Risetime">
+            <summary>
+            波形的上升时间
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Top">
+            <summary>
+            波形的顶端电压值
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Parameter_Type.Width">
+            <summary>
+            脉宽
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.SiglentOSC.Open_Status">
+            <summary>
+            示波器控制参数中开关量的设置
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Open_Status.On">
+            <summary>
+            功能开启
+            </summary>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.Open_Status.Off">
+            <summary>
+            功能关闭
+            </summary>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vOpenSessionRM">
+            <summary>
+            创建DefalutRM
+            </summary>
+            <returns>返回DefalutRM的会话值</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vOpenSession(System.Int32,System.String)">
+            <summary>
+            创建仪表会话session
+            </summary>
+            <param name="ResourceManager">DefalutRM</param>
+            <param name="ResourceAddress">VISA地址</param>
+            <returns>仪表会话号</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vCloseSession(System.Int32)">
+            <summary>
+            关闭VISA会话
+            </summary>
+            <param name="session">需要关闭的会话号</param>
+        </member>
+        <member name="F:Instrument_Controls.SiglentOSC.InforError">
+            <summary>
+            示波器通讯异常提示
+            </summary>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vInitializate(System.Int32,System.Int32,System.Byte)">
+            <summary>
+            示波器初始化设置
+            </summary>
+            <param name="ssionRM">ResouceManeger会话号</param>
+            <param name="ssionOSC">OSC会话号</param>
+            <param name="channel">使用的通道</param>
+            <returns>OSC初始化可能存在的信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vQueryValue(System.Int32,System.Int32,System.Byte,Instrument_Controls.SiglentOSC.Parameter_Type)">
+            <summary>
+            示波器执行指定参数的读取操作
+            </summary>
+            <param name="ssionRM">Resouce Mannager的会话号</param>
+            <param name="ssionOSC">使用VISA的示波器的会话号</param>
+            <param name="channel">示波器使用的通道</param>
+            <param name="parameter_type">指定返回的参数的类型，(请不要选择All，该参数属于集合数据，提取容易出错)</param>
+            <returns>返回示波器测量的指定参数</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vSetCouplingMode(System.Int32,System.Int32,System.Byte,Instrument_Controls.SiglentOSC.Coupling_Type,Instrument_Controls.SiglentOSC.Impedance_Type)">
+            <summary>
+            设置示波器的输入的AC/DC模式及输入阻抗
+            </summary>
+            <param name="ssionRM">Resouce Mannager的会话号</param>
+            <param name="ssionOSC">使用VISA的示波器的会话号</param>
+            <param name="channel">示波器使用的通道</param>
+            <param name="coupling_type">耦合方式</param>
+            <param name="impedance_type">输入阻抗模式</param>
+            <returns>可能存在的异常</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vSetVoltageDIV(System.Int32,System.Int32,System.Byte,Instrument_Controls.SiglentOSC.Voltage_DIV)">
+            <summary>
+            设置示波器的纵坐标最小分辨率
+            </summary>
+            <param name="ssionRM">Resouce Mannager的会话号</param>
+            <param name="ssionOSC">使用VISA的示波器的会话号</param>
+            <param name="channel">示波器使用的通道</param>
+            <param name="voltage_div">纵坐标的最小分辨率</param>
+            <returns>可能存在的异常</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vSetScanerDIV(System.Int32,System.Int32,System.Byte,Instrument_Controls.SiglentOSC.ScanerTime_DIV)">
+            <summary>
+            设置示波器的横坐标最小分辨率
+            </summary>
+            <param name="ssionRM">Resouce Mannager的会话号</param>
+            <param name="ssionOSC">使用VISA的示波器的会话号</param>
+            <param name="channel">示波器使用的通道</param>
+            <param name="scanertime_div">横坐标的最小分辨率</param>
+            <returns>异常情况</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vSetTrigMode(System.Int32,System.Int32,Instrument_Controls.SiglentOSC.TrigMode_Type)">
+            <summary>
+            更改示波器的触发模式（需要注意的是使用此种方法更换模式之后采集的运行/暂停模式会默认设置为运行）
+            </summary>
+            <param name="ssionRM">VISA中Resouce Mannager的会话号</param>
+            <param name="ssionOSC">选中的示波器的会话号</param>
+            <param name="trigmode_type">触发的类型</param>
+            <returns>可能存在的异常</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vSetRunMode(System.Int32,System.Int32,Instrument_Controls.SiglentOSC.Running_Type)">
+            <summary>
+            设置示波器的采集的开启或者停止状态
+            </summary>
+            <param name="ssionRM">VISA中Resouce Mannager的会话号</param>
+            <param name="ssionOSC">选中的示波器的会话号</param>        
+            <param name="running_type">选中是运行还是停止采集（停止采集之后图像会保持在现实屏上）</param>
+            <returns>可能存在的异常</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vSetFastSingleMode(System.Int32,System.Int32)">
+            <summary>
+            设置示波器从Auto或Normal模式更改为Single模式，不会影响采集开启/停止状态
+            </summary>
+            <param name="ssionRM">VISA中Resouce Mannager的会话号</param>
+            <param name="ssionOSC">选中的示波器的会话号</param>
+            <returns>可能存在的异常</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vSetAutoTest(System.Int32,System.Int32)">
+            <summary>
+            设置示波器进行自动测试
+            </summary>
+            <param name="ssionRM">VISA中Resouce Mannager的会话号</param>
+            <param name="ssionOSC">选中的示波器的会话号</param>
+            <returns>可能存在的异常</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vClearError(System.Int32,System.Int32)">
+            <summary>
+            清除示波器可能存在的异常情况（寄存器中的数据）
+            </summary>
+            <param name="ssionRM">VISA中Resouce Mannager的会话号</param>
+            <param name="ssionOSC">选中的示波器的会话号</param>
+            <returns>可能存在的异常</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vSetBandWidthLimit(System.Int32,System.Int32,System.Byte,Instrument_Controls.SiglentOSC.Open_Status)">
+            <summary>
+            设置示波器的带宽限制
+            </summary>
+            <param name="ssionRM">VISA中Resouce Mannager的会话号</param>
+            <param name="ssionOSC">选中的示波器的会话号</param>
+            /// <param name="channel">选中的通道</param>
+            <param name="open_status">选中带宽限制开启的状态</param>
+            <returns>可能存在的异常</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.SiglentOSC_vChangeTrigLevel(System.Int32,System.Int32,System.Byte,System.Decimal)">
+            <summary>
+            改变触发电平
+            </summary>
+            <param name="ssionRM">VISA中Resouce Mannager的会话号</param>
+            <param name="ssionOSC">选中的示波器的会话号</param>
+            <param name="channel">选中的示波器通道号</param>
+            <param name="trig_level">触发电平为目标电压除以当前屏幕的最小分辨率的倍数</param>
+            <returns>可能存在的异常</returns>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.Dispose">
+            <summary>
+            释放内存中所占的资源
+            </summary>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.Dispose(System.Boolean)">
+            <summary>
+            无法直接调用的资源释放程序
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:Instrument_Controls.SiglentOSC.Finalize">
+            <summary>
+            类析构函数
+            </summary>
+        </member>
+        <member name="T:Instrument_Controls.VISA_Control">
+            <summary>
+            使用VISA控制的外部设备 组合控制类
+            </summary>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vOpenSessionRM">
+            <summary>
+            创建DefalutRM
+            </summary>
+            <returns>返回DefalutRM的会话值</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vOpenSession(System.Int32,System.String)">
+            <summary>
+            创建仪表会话session
+            </summary>
+            <param name="ResourceManager">DefalutRM</param>
+            <param name="ResourceAddress">VISA地址</param>
+            <returns>仪表会话号</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vCloseSession(System.Int32)">
+            <summary>
+            关闭VISA会话
+            </summary>
+            <param name="session">需要关闭的会话号</param>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadInitializate(System.Int32,System.Int32)">
+            <summary>
+            电子负载的初始化设置
+            </summary>
+            <param name="ssionRM">ResouceManeger会话号</param>
+            <param name="ssionLoad">OSC会话号</param>
+            <returns>初始化时可能存在的错误信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadSetCurrent(System.Int32,System.Int32,System.Decimal)">
+            <summary>
+            设置电子负载的带载电流（CC模式） 
+            <param name="ssionRM">Resouce Mannager的VISA会话号</param>
+            <param name="ssionLoad">指定电子负载的VISA会话号</param>
+            <param name="Current_Value">设置电流的值，单位为 A</param>
+            <returns>发送指令的响应的信息</returns>
+            </summary>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadReadCurrent(System.Int32,System.Int32)">
+            <summary>
+            读取当前电子负载上的电流
+            </summary>
+            <param name="ssionRM">ResouceMannager会话号</param>
+            <param name="ssionLoad">指定电子负载的会话号</param>
+            <returns>当前状态电子负载带载电流</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadSetVoltage(System.Int32,System.Int32,System.Decimal)">
+            <summary>
+            设置电子负载的输入电压（用于CV模式/浮充电流测试状态）
+            </summary>    
+            <param name="ssionRM">ResouceMannager会话号</param>
+            <param name="ssionLoad">指定电子负载的会话号</param>
+            <param name="Voltage_Value">目标输入电压，单位为V</param>
+            <returns>发送指令的响应的信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadReadVoltage(System.Int32,System.Int32)">
+            <summary>
+            读取当前电子负载上的电压值
+            </summary>
+            <param name="ssionRM">Resouce Mannager的会话号</param>
+            <param name="ssionLoad">指定电子负载的VISA通讯会话号</param>
+            <returns>返回电子负载电压值</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadSetRemoteSense(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            控制远端测量模式的开启或者关闭
+            </summary>
+            <param name="ssionRM">VISA使用时的ResouceMannager会话号</param>
+            <param name="ssionLoad">指定VISA控制形式的电子负载的会话号</param>
+            <param name="Remote_Sense_Status">远端测量模式开启状态</param>
+            <returns>指令执行正确与否的信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadSetOperationMode(System.Int32,System.Int32,Instrument_Controls.ElectronicLoad_Control_IT8500.Operation_Mode)">
+            <summary>
+            电子负载工作模式的设置
+            </summary>
+            <param name="ssionRM">RM会话</param>
+            <param name="ssionLoad">指定电子负载的会话</param>
+            <param name="Mode">设定的工作模式</param>
+            <returns>指令执行正确与否的信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadSetRisistance_CRMode(System.Int32,System.Int32,System.Decimal)">
+            <summary>
+            在CR模式下设定的阻值
+            </summary>
+            <param name="ssionRM">DefaultRM会话号</param>
+            <param name="ssionLoad">电子负载会话号</param>
+            <param name="resistance">预设电阻值</param>
+            <returns>返回设置操作的状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadSetVoltage_CVMode(System.Int32,System.Int32,System.Decimal)">
+            <summary>
+            在CV模式下设定的电压
+            </summary>
+            <param name="ssionRM">DefaultRM会话号</param>
+            <param name="ssionLoad">电子负载会话号</param>
+            <param name="voltage">预设电压值</param>
+            <returns>返回设置操作的状态</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadSeOCPStatus(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            设定电子负载的过流保护状态
+            </summary>
+            <param name="ssionRM">RM会话</param>
+            <param name="ssionLoad">指定电子负载的会话</param>
+            <param name="Status">过流保护状态</param>
+            <returns>指令执行正确与否的信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadSetOCPValue(System.Int32,System.Int32,System.Decimal)">
+            <summary>
+            电子负载过流保护电流值的设定
+            </summary>
+            <param name="ssionRM">RM会话</param>
+            <param name="ssionLoad">指定电子负载的会话</param>
+            <param name="OCP_Value">软件过流保护值 单位为A</param>
+            <returns>指令执行正确与否的信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadSetOCPDelay(System.Int32,System.Int32,System.Byte)">
+            <summary>
+            电子负载过流保护延迟时间，超过这个时间后输入断开
+            </summary>
+            <param name="ssionRM">RM会话</param>
+            <param name="ssionLoad">指定电子负载的会话</param>
+            <param name="Delay_Seconds">过流保护延迟时间，单位为秒；取值范围0~60秒</param>
+            <returns>指令执行正确与否的信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadSetInputStatus(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            控制电子负载的输入状态
+            </summary>
+            <param name="ssionRM">RM会话</param>
+            <param name="ssionLoad">指定电子负载的会话</param>
+            <param name="Status">电子负载输入的开关状态</param>
+            <returns>指令执行正确与否的信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadSetRemoteMode(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            控制电子负载的远程控制或者是本地模式
+            </summary>
+            <param name="ssionRM">RM会话</param>
+            <param name="ssionLoad">指定电子负载的会话</param>
+            <param name="Status">电子负载程控模式的开关状态</param>
+            <returns>指令执行正确与否的信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Visa_vLoadLockKeyboad(System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            控制电子负载的前面板按键是否锁定
+            </summary>
+            <param name="ssionRM">RM会话</param>
+            <param name="ssionLoad">指定电子负载的会话</param>
+            <param name="Status">键盘锁的状态</param>
+            <returns>指令执行正确与否的信息</returns>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Dispose">
+            <summary>
+            释放内存中所占的资源
+            </summary>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Dispose(System.Boolean)">
+            <summary>
+            无法直接调用的资源释放程序
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="M:Instrument_Controls.VISA_Control.Finalize">
+            <summary>
+            类析构函数
+            </summary>
+        </member>
+    </members>
+</doc>

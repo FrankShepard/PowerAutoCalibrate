@@ -33,7 +33,7 @@
     <SuiteName>电源数据校准</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -122,7 +122,7 @@
   <ItemGroup>
     <Reference Include="Instrument_Control, Version=1.0.2.1, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\仪表程控\Instrument_Control\Instrument_Control\backup\历史版本\1.0.2.1\Instrument_Control.dll</HintPath>
+      <HintPath>Instrument_Control\Instrument_Control.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -177,7 +177,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="ACPowerControl_TemporaryKey.pfx" />
     <None Include="app.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">

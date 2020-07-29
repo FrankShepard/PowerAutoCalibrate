@@ -898,6 +898,16 @@ namespace ACPowerControl
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
 					break;
+				case Product.SpeciesName.IG_M1101H:/*尼特1U单路10A电源*/
+					product.calibration_current_1 = 10000; product.calibration_current_2 = 0; product.calibration_current_3 = 0;
+					product.desinged_ocp_1 = 10500; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
+					product.species_name = ( Product.SpeciesName )cobSpeciesProduct.SelectedIndex; product.communicate_baudrate = 2400;
+					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
+					product.mainpower_voltage_should_calirate = false; product.serial_parity = Parity.None;
+
+					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
+					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
+					break;
 				case Product.SpeciesName.IG_M1102F:/*标准1U单路10A电源*/
 				case Product.SpeciesName.IG_X1101K: /*泰和安10A箱式电源*/
 					product.calibration_current_1 = 10000; product.calibration_current_2 = 0; product.calibration_current_3 = 0;

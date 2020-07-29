@@ -274,7 +274,7 @@ namespace ACPowerControl
 				case Product.SpeciesName.IG_B1032F:
 				case Product.SpeciesName.IG_B2032F: /*声讯电子 12V3A*/
 				case Product.SpeciesName.IG_B2032H:
-				case Product.SpeciesName.IG_B2022F: /*24V 2A*/
+				case Product.SpeciesName.IG_B2022F: /*24V 2A*/				
 				case Product.SpeciesName.IG_M1102H:/*泛海三江1U电源改10A*/
 				case Product.SpeciesName.IG_M1202H:/*泛海三江1U电源改20A*/
 				case Product.SpeciesName.GST_LD_D02H:
@@ -303,6 +303,7 @@ namespace ACPowerControl
 				case Product.SpeciesName.IG_B2053K:
 				case Product.SpeciesName.IG_B2073F:
 				case Product.SpeciesName.IG_B1051H:
+				case Product.SpeciesName.IG_M1101H://尼特所需1U 10A电源
 					golden_finger = new byte[] { 0x68 , 0x00 , 0xAB , 0x54 , 0x01 , 0x00 , 0x00 , 0x16 }; //通用协议的校准方式
 					strInformation = McuControl_vCommandSend( golden_finger , ref sp_mcu );
 					break;

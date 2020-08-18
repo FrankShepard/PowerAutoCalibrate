@@ -341,6 +341,8 @@ namespace ACPowerControl
 				case Product.SpeciesName.IG_Z2102L://赋安专用应急照明电源 2节电池 300W
 				case Product.SpeciesName.IG_Z2182L://赋安专用应急照明电源 2节电池 500W
 				case Product.SpeciesName.IG_Z2272L://赋安专用应急照明电源 2节电池 750W
+				case Product.SpeciesName.IG_Z1203F://海湾应急照明电源 2节电池 800W 升压
+				case Product.SpeciesName.IG_Z2244F://其他用户应急照明电源 3节电池 1000W
 					golden_finger = new byte[] { 0x68 , 0x00 , 0x01 , 0x68 , 0xA9 , 0xAA , 0x16 };
 					strInformation = McuControl_vCommandSend( golden_finger , ref sp_mcu );
 					break;

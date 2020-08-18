@@ -1207,6 +1207,28 @@ namespace ACPowerControl
 					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
 					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
 					break;
+				case Product.SpeciesName.IG_Z1203F:
+					/*海湾800W应急照明电源，保留备电单投功能*/
+					product.calibration_current_1 = 20000; product.calibration_current_2 = 0; product.calibration_current_3 = 0;
+					product.desinged_ocp_1 = 27000; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
+					product.species_name = Product.SpeciesName.IG_Z1203F; product.communicate_baudrate = 9600;
+					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
+					product.mainpower_voltage_should_calirate = true;
+
+					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
+					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
+					break;
+				case Product.SpeciesName.IG_Z2244F:
+					/*海湾800W应急照明电源，保留备电单投功能*/
+					product.calibration_current_1 = 25000; product.calibration_current_2 = 0; product.calibration_current_3 = 0;
+					product.desinged_ocp_1 = 34000; product.desinged_ocp_2 = 0; product.desinged_ocp_3 = 0;
+					product.species_name = Product.SpeciesName.IG_Z2244F; product.communicate_baudrate = 9600;
+					product.output_channel = 1; product.mainpower_undervoltage_should_calibrate = true;
+					product.mainpower_voltage_should_calirate = true;
+
+					chkOutput1.IsChecked = false; chkOutput2.IsChecked = true; chkOutput3.IsChecked = true;
+					chkOutput1.IsChecked = true; chkOutput2.IsChecked = false; chkOutput3.IsChecked = false;
+					break;
 				default:
 					break;
 			}
@@ -1324,7 +1346,7 @@ namespace ACPowerControl
 			string error_information = string.Empty;
 
 			//是否允许备电单投功能
-			if ((product.species_name >= Product.SpeciesName.IG_Z2071F) && (product.species_name <= Product.SpeciesName.IG_Z2272L)) {
+			if (( product.species_name >= Product.SpeciesName.IG_Z2071F ) && ( product.species_name <= Product.SpeciesName.IG_Z2244F )) {
 				if ((product.species_name >= Product.SpeciesName.IG_Z2102L) && (product.species_name <= Product.SpeciesName.IG_Z2272L)) {
 					//用户指令的设置
 					error_information = mcu_control.McuControl_vSetBatCutoffVoltage( 205, product.species_name, ref sp_product ); Thread.Sleep( 800 ); //赋安要求，备电切断点设置为20.5V
@@ -1333,12 +1355,16 @@ namespace ACPowerControl
 					if (error_information != string.Empty) { return error_information; }
 				}
 
-				if ((product.species_name == Product.SpeciesName.IG_Z2071F) || (product.species_name == Product.SpeciesName.IG_Z2102F) || (product.species_name == Product.SpeciesName.IG_Z2102L)) {
+				if (( product.species_name == Product.SpeciesName.IG_Z2071F ) || ( product.species_name == Product.SpeciesName.IG_Z2102F ) || ( product.species_name == Product.SpeciesName.IG_Z2102L )) {
 					error_information = mcu_control.McuControl_vSetOverpowrSignal( product.species_name, 320m, ref sp_product ); Thread.Sleep( 200 ); //将默认过功率值设置为320W
-				} else if ((product.species_name == Product.SpeciesName.IG_Z2121F) || (product.species_name == Product.SpeciesName.IG_Z2182F) || (product.species_name == Product.SpeciesName.IG_Z2182L)) {
+				} else if (( product.species_name == Product.SpeciesName.IG_Z2121F ) || ( product.species_name == Product.SpeciesName.IG_Z2182F ) || ( product.species_name == Product.SpeciesName.IG_Z2182L )) {
 					error_information = mcu_control.McuControl_vSetOverpowrSignal( product.species_name, 530m, ref sp_product ); Thread.Sleep( 200 ); //将默认过功率值设置为530W
-				} else if ((product.species_name == Product.SpeciesName.IG_Z2181F) || (product.species_name == Product.SpeciesName.IG_Z2272F) || (product.species_name == Product.SpeciesName.IG_Z2272L)) {
+				} else if (( product.species_name == Product.SpeciesName.IG_Z2181F ) || ( product.species_name == Product.SpeciesName.IG_Z2272F ) || ( product.species_name == Product.SpeciesName.IG_Z2272L )) {
 					error_information = mcu_control.McuControl_vSetOverpowrSignal( product.species_name, 800m, ref sp_product ); Thread.Sleep( 200 ); //将默认过功率值设置为800W
+				} else if (product.species_name == Product.SpeciesName.IG_Z1203F) {
+					error_information = mcu_control.McuControl_vSetOverpowrSignal( product.species_name, 1200m, ref sp_product ); Thread.Sleep( 200 ); //将默认过功率值设置为1200W
+				} else if (product.species_name == Product.SpeciesName.IG_Z2244F) {
+					error_information = mcu_control.McuControl_vSetOverpowrSignal( product.species_name, 1500m, ref sp_product ); Thread.Sleep( 200 ); //将默认过功率值设置为1500W
 				}
 
 				sp_product.BaudRate = product.communicate_baudrate; Thread.Sleep( 5 );
@@ -1346,7 +1372,9 @@ namespace ACPowerControl
 				mcu_control.McuControl_vInitialize( product.species_name, ref sp_product ); Thread.Sleep( 200 );
 				sp_product.ReadExisting();
 
-				error_information = mcu_control.McuControl_vAssign( MCU_Control.Command.Set, MCU_Control.Config.BatsSingleWorkDisable, ref sp_product, 1 ); Thread.Sleep( 100 );
+				if (product.species_name != Product.SpeciesName.IG_Z1203F) {
+					error_information = mcu_control.McuControl_vAssign( MCU_Control.Command.Set, MCU_Control.Config.BatsSingleWorkDisable, ref sp_product, 1 ); Thread.Sleep( 100 );
+				}
 			}
 
 			return error_information;
@@ -1364,13 +1392,9 @@ namespace ACPowerControl
 
 			if ( !Main_bBeepWorkingTimeKeepDefault ) {
 				//应急照明电源的相关设置不需要在校准模式下
-				if ((product.species_name >= Product.SpeciesName.IG_Z2102L) && (product.species_name <= Product.SpeciesName.IG_Z2272L)) {
-					error_information = mcu_control.McuControl_vSetBeepTime( 2, product.species_name, ref sp_product ); Thread.Sleep( 100 );
-				} else if ((product.species_name >= Product.SpeciesName.IG_Z2071F) && (product.species_name <= Product.SpeciesName.IG_Z2272F)) {
-					error_information = mcu_control.McuControl_vSetBeepTime( 4200, product.species_name, ref sp_product ); Thread.Sleep( 100 );
-				} else if ((product.species_name == Product.SpeciesName.IG_M1202F) || (product.species_name == Product.SpeciesName.IG_M1102F) || (product.species_name == Product.SpeciesName.IG_M1302F)) {
-					error_information = mcu_control.McuControl_vSetBeepTime( 4200, product.species_name, ref sp_product ); Thread.Sleep( 100 );
-				} else {
+				if ((product.species_name >= Product.SpeciesName.IG_Z2102L) && (product.species_name <= Product.SpeciesName.IG_Z2244F)) {
+					error_information = mcu_control.McuControl_vSetBeepTime( 2, product.species_name, ref sp_product ); Thread.Sleep( 50 );
+				}  else {
 					//其它电源需要在校准模式下执行（STM8S的单片机除外）
 					if ((product.species_name != Product.SpeciesName.IG_M3201F__20A主机电源) && (product.species_name != Product.SpeciesName.IG_B1061F__IG_B06S01)) {
 						sp_product.BaudRate = product.communicate_baudrate; Thread.Sleep( 5 );
@@ -1581,8 +1605,8 @@ namespace ACPowerControl
 			int retry_time = 0;
 
 			//特定型号电源上实现此功能    勾选了不使用备电电流校准的情况下也需要跳过该功能的校准环节
-			if ( ( !ShouldCalibrateSpCurrent ) || ( !(( ( product.species_name >= Product.SpeciesName.IG_Z2071F ) && ( product.species_name <= Product.SpeciesName.IG_Z2272L ) ) || (product.species_name == Product.SpeciesName.IG_M1202F)
-				|| (product.species_name == Product.SpeciesName.IG_M1102F) || (product.species_name == Product.SpeciesName.IG_M1302F) ) )) { 
+			if (( !ShouldCalibrateSpCurrent ) || ( !( ( ( product.species_name >= Product.SpeciesName.IG_Z2071F ) && ( product.species_name <= Product.SpeciesName.IG_Z2244F ) ) || ( product.species_name == Product.SpeciesName.IG_M1202F )
+				|| ( product.species_name == Product.SpeciesName.IG_M1102F ) || ( product.species_name == Product.SpeciesName.IG_M1302F ) ) )) {
 				return error_information;
 			}
 
@@ -1686,7 +1710,7 @@ namespace ACPowerControl
 		{
 			string error_information = string.Empty;
 			/*写入OCP - 应急照明电源不需要执行此操作*/
-			if ( !( ( product.species_name >= Product.SpeciesName.IG_Z2071F ) && ( product.species_name <= Product.SpeciesName.IG_Z2272L ) ) ) {
+			if (!( ( product.species_name >= Product.SpeciesName.IG_Z2071F ) && ( product.species_name <= Product.SpeciesName.IG_Z2244F ) )) {
 
 				sp_product.BaudRate = product.communicate_baudrate; Thread.Sleep( 5 );
 				/*防止长时间没有响应代码造成的管理员账户等待超时退出*/
@@ -1780,7 +1804,13 @@ namespace ACPowerControl
 			/*先等待主电工作 - 判断标准：输出电压为标准电压附近*/
 			int index = 0;
 			decimal voltage_target = 27.5m;
-			if ( ( product.species_name == Product.SpeciesName.IG_B2032F ) || ( product.species_name == Product.SpeciesName.IG_B2032H ) || ( product.species_name == Product.SpeciesName.IG_B1032F ) ) { voltage_target = 13.0m; } else if ( product.species_name == Product.SpeciesName.J_EI8212 ) { voltage_target = 25.5m; } //输出1为稳压输出  标准值为25.5V
+			if (( product.species_name == Product.SpeciesName.IG_B2032F ) || ( product.species_name == Product.SpeciesName.IG_B2032H ) || ( product.species_name == Product.SpeciesName.IG_B1032F )) {
+				voltage_target = 13.0m;
+			} else if (product.species_name == Product.SpeciesName.J_EI8212) {
+				voltage_target = 25.5m; //输出1为稳压输出  标准值为25.5V
+			} else if (( product.species_name == Product.SpeciesName.IG_Z2071F ) || ( product.species_name == Product.SpeciesName.IG_Z2121F ) || ( product.species_name == Product.SpeciesName.IG_Z2181F ) || ( product.species_name == Product.SpeciesName.IG_Z1203F ) || ( product.species_name == Product.SpeciesName.IG_Z2244F )) {
+				voltage_target = 41m; //主电输出为41V左右
+			}
 			while ( ++index <= 80 ) {
 				for ( int index_of_load = 0 ; index_of_load < 3 ; index_of_load++ ) {
 					if ( UseLoad[ index_of_load ] ) {
@@ -2009,17 +2039,7 @@ namespace ACPowerControl
 			mcu_control.McuControl_vInitialize( product.species_name , ref sp_product );
 			Thread.Sleep( 150 );
 			sp_product.ReadExisting( );
-
-			//备电无法单投的产品需要在此处关闭主电
-			if ( ( product.species_name == Product.SpeciesName.IG_Z2102L ) || ( product.species_name == Product.SpeciesName.IG_Z2182L ) || ( product.species_name == Product.SpeciesName.IG_Z2272L ) ) { 
-				retry_time = 0;
-				do {
-					error_information = an97002h.ACPower_vControlStop( 12 , ref sp_acpower ); Thread.Sleep( 50 );
-				} while ( ( ++retry_time < 5 ) && ( error_information != string.Empty ) );
-				if ( error_information != string.Empty ) { return error_information; }
-				Thread.Sleep( 2000 ); //等待电源切换到备电上进行工作
-			}
-
+			
 			/*备电电压校准 - 将通道1空载时的电压作为备电电压 - 注意：J-EI8212 需要使用第二路输出电压来校准*/
 			for ( int index_of_load = 0 ; index_of_load < UseLoad.Length ; index_of_load++ ) {
 				if ( product.species_name == Product.SpeciesName.J_EI8212 ) {
@@ -2043,15 +2063,6 @@ namespace ACPowerControl
 				}
 			}
 
-			//备电无法单投的产品需要在此处打开主电
-			if ( ( product.species_name == Product.SpeciesName.IG_Z2102L ) || ( product.species_name == Product.SpeciesName.IG_Z2182L ) || ( product.species_name == Product.SpeciesName.IG_Z2272L ) ) {
-				retry_time = 0;
-				do {
-					error_information = an97002h.ACPower_vControlStart( 12 , ref sp_acpower ); Thread.Sleep( 500 );
-				} while ( ( ++retry_time < 5 ) && ( error_information != string.Empty ) );
-				if ( error_information != string.Empty ) { return error_information; }
-			}
-
 			/*单片机复位以生效 - 包含单片机重启后一段时间不响应串口代码的时间*/
 			error_information = mcu_control.McuControl_vAssign( MCU_Control.Command.Reset , MCU_Control.Config.DisplayVoltage_Ratio_1 , ref sp_product , 1 );
 			Thread.Sleep( 500 );
@@ -2059,61 +2070,59 @@ namespace ACPowerControl
 			return error_information;
 		}
 
-		private string Main_vCalibration_Initalize( Product product , MCU_Control mcu_control , AN97002H an97002h , ElectronicLoad_Control_IT8500 it8500 )
+		private string Main_vCalibration_Initalize(Product product, MCU_Control mcu_control, AN97002H an97002h, ElectronicLoad_Control_IT8500 it8500)
 		{
 			string error_information = string.Empty;
 			int retry_time = 0;
 
-			sp_common.Close( );
+			sp_common.Close();
 			sp_common.BaudRate = 9600;
 			Thread.Sleep( 5 );
-			for ( int index_of_load = 0 ; index_of_load < UseLoad.Length ; index_of_load++ ) {
-				if ( UseLoad[ index_of_load ] ) {
+			for (int index_of_load = 0; index_of_load < UseLoad.Length; index_of_load++) {
+				if (UseLoad[ index_of_load ]) {
 					retry_time = 0;
 					do {
-						error_information = it8500.ElectronicLoadControl_vInitializate( ref sp_common , ( byte ) ( index_of_load + 1 ) ); Thread.Sleep( 10 );
-					} while ( ( ++retry_time < 5 ) && ( error_information != string.Empty ) );
+						error_information = it8500.ElectronicLoadControl_vInitializate( ref sp_common, ( byte ) ( index_of_load + 1 ) ); Thread.Sleep( 10 );
+					} while (( ++retry_time < 5 ) && ( error_information != string.Empty ));
 				}
 			}
-			if ( error_information != string.Empty ) { return error_information; }
+			if (error_information != string.Empty) { return error_information; }
 
-			if ( !( ( product.species_name == Product.SpeciesName.IG_Z2102L ) || ( product.species_name == Product.SpeciesName.IG_Z2182L ) || ( product.species_name == Product.SpeciesName.IG_Z2272L ) ) ) {
-				retry_time = 0;
-				do {
-					error_information = an97002h.ACPower_vControlStop( 12 , ref sp_acpower ); Thread.Sleep( 50 );
-				} while ( ( ++retry_time < 5 ) && ( error_information != string.Empty ) );
-				if ( error_information != string.Empty ) { return error_information; }
-			}
+			retry_time = 0;
+			do {
+				error_information = an97002h.ACPower_vControlStop( 12, ref sp_acpower ); Thread.Sleep( 50 );
+			} while (( ++retry_time < 5 ) && ( error_information != string.Empty ));
+			if (error_information != string.Empty) { return error_information; }
 
 			/*金手指动作*/
-			sp_product.Close( );
+			sp_product.Close();
 			sp_product.BaudRate = product.communicate_baudrate;
 			Thread.Sleep( 5 );
-			mcu_control.McuControl_vInitialize( product.species_name , ref sp_product );
+			mcu_control.McuControl_vInitialize( product.species_name, ref sp_product );
 			Thread.Sleep( 100 );
-			sp_product.ReadExisting( );
+			sp_product.ReadExisting();
 
 			/*单片机校准之前需要将校准数据擦除 - STM8S芯片的单片机没有此功能*/
-			if ( ( product.species_name != Product.SpeciesName.IG_B1061F__IG_B06S01 ) && ( product.species_name != Product.SpeciesName.IG_M3201F__20A主机电源 ) ) {
-				error_information = mcu_control.McuControl_vAssign( MCU_Control.Command.Set , MCU_Control.Config.Mcu_ClearValidationCode , ref sp_product ); Thread.Sleep( 100 );
-				if ( error_information != string.Empty ) { return error_information; }
+			if (( product.species_name != Product.SpeciesName.IG_B1061F__IG_B06S01 ) && ( product.species_name != Product.SpeciesName.IG_M3201F__20A主机电源 )) {
+				error_information = mcu_control.McuControl_vAssign( MCU_Control.Command.Set, MCU_Control.Config.Mcu_ClearValidationCode, ref sp_product ); Thread.Sleep( 100 );
+				if (error_information != string.Empty) { return error_information; }
 			}
 
 			/*输出带载用于耗电 - 使用CR模式*/
-			for ( int index_of_load = 0 ; index_of_load < UseLoad.Length ; index_of_load++ ) {
-				if ( UseLoad[ index_of_load ] ) {
+			for (int index_of_load = 0; index_of_load < UseLoad.Length; index_of_load++) {
+				if (UseLoad[ index_of_load ]) {
 					retry_time = 0;
 					do {
-						error_information = it8500.ElectronicLoadControl_vSendCommand( ( byte ) ( index_of_load + 1 ) , ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Operation_Mode , ( byte ) ElectronicLoad_Control_IT8500.Operation_Mode.CR , ref sp_common ); Thread.Sleep( 30 );
-						error_information = it8500.ElectronicLoadControl_vSendCommand( ( byte ) ( index_of_load + 1 ) , ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Restance_CR , CR_VALUE , ref sp_common ); Thread.Sleep( 30 );      //设置为50Ω进行输出虚电的放电操作
-						error_information = it8500.ElectronicLoadControl_vSendCommand( ( byte ) ( index_of_load + 1 ) , ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.On_Or_Off , ( byte ) ElectronicLoad_Control_IT8500.Input_Status.On , ref sp_common ); Thread.Sleep( 30 );
-					} while ( ( ++retry_time < 5 ) && ( error_information != string.Empty ) );
-					if ( error_information != string.Empty ) { return error_information; }
+						error_information = it8500.ElectronicLoadControl_vSendCommand( ( byte ) ( index_of_load + 1 ), ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.Operation_Mode, ( byte ) ElectronicLoad_Control_IT8500.Operation_Mode.CR, ref sp_common ); Thread.Sleep( 30 );
+						error_information = it8500.ElectronicLoadControl_vSendCommand( ( byte ) ( index_of_load + 1 ), ElectronicLoad_Control_IT8500.Command_Set_One_Int32_Parmeter.Restance_CR, CR_VALUE, ref sp_common ); Thread.Sleep( 30 );      //设置为50Ω进行输出虚电的放电操作
+						error_information = it8500.ElectronicLoadControl_vSendCommand( ( byte ) ( index_of_load + 1 ), ElectronicLoad_Control_IT8500.Command_Set_One_Byte_Parmeter.On_Or_Off, ( byte ) ElectronicLoad_Control_IT8500.Input_Status.On, ref sp_common ); Thread.Sleep( 30 );
+					} while (( ++retry_time < 5 ) && ( error_information != string.Empty ));
+					if (error_information != string.Empty) { return error_information; }
 				}
 			}
 
 			/*单片机复位以生效 - 包含单片机重启后一段时间不响应串口代码的时间*/
-			error_information = mcu_control.McuControl_vAssign( MCU_Control.Command.Reset , MCU_Control.Config.DisplayVoltage_Ratio_1 , ref sp_product , 1 );
+			error_information = mcu_control.McuControl_vAssign( MCU_Control.Command.Reset, MCU_Control.Config.DisplayVoltage_Ratio_1, ref sp_product, 1 );
 			Thread.Sleep( 500 );
 
 			return error_information;
